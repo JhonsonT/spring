@@ -20,24 +20,24 @@
     A sample context that shows how to integrate MyBatis with Spring using
     a hand-coded DAO implementation.
 -->
-<beans xmlns="http://www.springframework.org/schema/beans"
-     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-     xsi:schemaLocation="
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns="http://www.springframework.org/schema/beans"
+       xsi:schemaLocation="
      http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-    <!-- import common beans  -->
-    <import resource="classpath:org/mybatis/spring/sample/config/applicationContext-infrastructure.xml"/>
+  <!-- import common beans  -->
+  <import resource="classpath:org/mybatis/spring/sample/config/applicationContext-infrastructure.xml"/>
 
-    <!-- Mock for preventing bean creation error -->
-    <bean id="userMapper" class="org.mockito.Mockito" factory-method="mock">
-      <constructor-arg value="org.mybatis.spring.sample.mapper.UserMapper"/>
-    </bean>
+  <!-- Mock for preventing bean creation error -->
+  <bean id="userMapper" class="org.mockito.Mockito" factory-method="mock">
+    <constructor-arg value="org.mybatis.spring.sample.mapper.UserMapper"/>
+  </bean>
 
-    <!-- Classic DAO pattern built with an interface and an implementation. -->
-    <bean id="userDao" class="org.mybatis.spring.sample.dao.UserDaoImpl" autowire="byType" />
+  <!-- Classic DAO pattern built with an interface and an implementation. -->
+  <bean id="userDao" class="org.mybatis.spring.sample.dao.UserDaoImpl" autowire="byType"/>
 
-    <bean id="barService" class="org.mybatis.spring.sample.service.BarService">
-      <constructor-arg ref="userDao"/>
-    </bean>
+  <bean id="barService" class="org.mybatis.spring.sample.service.BarService">
+    <constructor-arg ref="userDao"/>
+  </bean>
 
 </beans>

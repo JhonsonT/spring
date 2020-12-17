@@ -1,6 +1,7 @@
 <a name="スタートガイド"></a>
+
 # スタートガイド
- 
+
 この章では、MyBatis-Spring のインストール・設定手順と、トランザクション処理を含むシンプルなアプリケーションの構築する方法について説明します。
 
 ## インストール
@@ -19,9 +20,11 @@ Maven をお使いの場合は、 pom.xml に次の dependency を追加して�
 
 ## クイックセットアップ
 
-MyBatis と Spring を組み合わせて使う場合、Spring の Application Context 内に少なくとも `SqlSessionFactory` と一つ以上の Mapper インターフェイスを定義する必要があります。
+MyBatis と Spring を組み合わせて使う場合、Spring の Application Context 内に少なくとも `SqlSessionFactory` と一つ以上の Mapper
+インターフェイスを定義する必要があります。
 
-MyBatis-Spring では `SqlSessionFactory` の生成に `SqlSessionFactoryBean` を使います。この Factory Bean を設定するため、Spring の 設定ファイルに次の Bean を追加してください。
+MyBatis-Spring では `SqlSessionFactory` の生成に `SqlSessionFactoryBean` を使います。この Factory Bean を設定するため、Spring の 設定ファイルに次の Bean
+を追加してください。
 
 ```xml
 <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
@@ -61,12 +64,10 @@ public interface UserMapper {
 </bean>
 ```
 
-ここで指定した Mapper は、実装クラスではなく **インターフェイス** である必要がありますので注意してください。
-この例では、アノテーションを使って SQL を指定していますが、Mapper XML ファイルを使うこともできます。
+ここで指定した Mapper は、実装クラスではなく **インターフェイス** である必要がありますので注意してください。 この例では、アノテーションを使って SQL を指定していますが、Mapper XML ファイルを使うこともできます。
 
 上記のように設定しておけば、あとは他の Spring Bean と同様にビジネス／サービス層のオブジェクトにインジェクト（注入）することができます。
-`MapperFactoryBean` は `SqlSession` の生成とクローズを行います。
-もし Spring のトランザクション内で実行された場合は、トランザクション終了時にセッションがコミットあるいはロールバックされます。
+`MapperFactoryBean` は `SqlSession` の生成とクローズを行います。 もし Spring のトランザクション内で実行された場合は、トランザクション終了時にセッションがコミットあるいはロールバックされます。
 最後にもう一点、全ての例外は Spring の `DataAccessException` に変換されます。
 
 Java Configurationを使用する場合:

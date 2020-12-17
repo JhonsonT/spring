@@ -1,7 +1,9 @@
 <a name="MyBatis_API_사용하기"></a>
+
 # MyBatis API 사용하기
 
-MyBatis-Spring 연동 모듈을 사용해도 계속해서 MyBatis API를 직접 사용할 수 있다. `SqlSessionFactoryBean`을 사용해서 스프링에서 `SqlSessionFactory`를 생성하고 팩토리를 사용하면 된다.
+MyBatis-Spring 연동 모듈을 사용해도 계속해서 MyBatis API를 직접 사용할 수 있다. `SqlSessionFactoryBean`을 사용해서 스프링에서 `SqlSessionFactory`를 생성하고
+팩토리를 사용하면 된다.
 
 ```java
 public class UserDaoImpl implements UserDao {

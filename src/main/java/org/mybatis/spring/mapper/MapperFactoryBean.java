@@ -1,12 +1,12 @@
 /**
  * Copyright 2010-2019 the original author or authors.
- *
+ * <p>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *    http://www.apache.org/licenses/LICENSE-2.0
- *
+ * <p>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p>
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -15,13 +15,13 @@
  */
 package org.mybatis.spring.mapper;
 
-import static org.springframework.util.Assert.notNull;
-
 import org.apache.ibatis.executor.ErrorContext;
 import org.apache.ibatis.session.Configuration;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.mybatis.spring.support.SqlSessionDaoSupport;
 import org.springframework.beans.factory.FactoryBean;
+
+import static org.springframework.util.Assert.notNull;
 
 /**
  * BeanFactory that enables injection of MyBatis mapper interfaces. It can be set up with a SqlSessionFactory or a
@@ -114,6 +114,15 @@ public class MapperFactoryBean<T> extends SqlSessionDaoSupport implements Factor
   // ------------- mutators --------------
 
   /**
+   * Return the mapper interface of the MyBatis mapper
+   *
+   * @return class of the interface
+   */
+  public Class<T> getMapperInterface() {
+    return mapperInterface;
+  }
+
+  /**
    * Sets the mapper interface of the MyBatis mapper
    *
    * @param mapperInterface
@@ -124,12 +133,12 @@ public class MapperFactoryBean<T> extends SqlSessionDaoSupport implements Factor
   }
 
   /**
-   * Return the mapper interface of the MyBatis mapper
+   * Return the flag for addition into MyBatis config.
    *
-   * @return class of the interface
+   * @return true if the mapper will be added to MyBatis in the case it is not already registered.
    */
-  public Class<T> getMapperInterface() {
-    return mapperInterface;
+  public boolean isAddToConfig() {
+    return addToConfig;
   }
 
   /**
@@ -145,14 +154,5 @@ public class MapperFactoryBean<T> extends SqlSessionDaoSupport implements Factor
    */
   public void setAddToConfig(boolean addToConfig) {
     this.addToConfig = addToConfig;
-  }
-
-  /**
-   * Return the flag for addition into MyBatis config.
-   *
-   * @return true if the mapper will be added to MyBatis in the case it is not already registered.
-   */
-  public boolean isAddToConfig() {
-    return addToConfig;
   }
 }

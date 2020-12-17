@@ -1,12 +1,12 @@
 /**
  * Copyright 2010-2020 the original author or authors.
- *
+ * <p>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *    http://www.apache.org/licenses/LICENSE-2.0
- *
+ * <p>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p>
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -14,11 +14,6 @@
  * limitations under the License.
  */
 package org.mybatis.spring.batch;
-
-import static org.springframework.util.Assert.isTrue;
-import static org.springframework.util.Assert.notNull;
-
-import java.util.List;
 
 import org.apache.ibatis.executor.BatchResult;
 import org.apache.ibatis.session.ExecutorType;
@@ -32,6 +27,11 @@ import org.springframework.beans.factory.InitializingBean;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.dao.InvalidDataAccessResourceUsageException;
+
+import java.util.List;
+
+import static org.springframework.util.Assert.isTrue;
+import static org.springframework.util.Assert.notNull;
 
 /**
  * {@code ItemWriter} that uses the batching features from {@code SqlSessionTemplate} to execute a batch of statements
@@ -126,7 +126,7 @@ public class MyBatisBatchItemWriter<T> implements ItemWriter<T>, InitializingBea
   public void afterPropertiesSet() {
     notNull(sqlSessionTemplate, "A SqlSessionFactory or a SqlSessionTemplate is required.");
     isTrue(ExecutorType.BATCH == sqlSessionTemplate.getExecutorType(),
-        "SqlSessionTemplate's executor type must be BATCH");
+      "SqlSessionTemplate's executor type must be BATCH");
     notNull(statementId, "A statementId is required.");
     notNull(itemToParameterConverter, "A itemToParameterConverter is required.");
   }
@@ -149,7 +149,7 @@ public class MyBatisBatchItemWriter<T> implements ItemWriter<T>, InitializingBea
       if (assertUpdates) {
         if (results.size() != 1) {
           throw new InvalidDataAccessResourceUsageException("Batch execution returned invalid results. "
-              + "Expected 1 but number of BatchResult objects returned was " + results.size());
+            + "Expected 1 but number of BatchResult objects returned was " + results.size());
         }
 
         int[] updateCounts = results.get(0).getUpdateCounts();
@@ -158,7 +158,7 @@ public class MyBatisBatchItemWriter<T> implements ItemWriter<T>, InitializingBea
           int value = updateCounts[i];
           if (value == 0) {
             throw new EmptyResultDataAccessException(
-                "Item " + i + " of " + updateCounts.length + " did not update any rows: [" + items.get(i) + "]", 1);
+              "Item " + i + " of " + updateCounts.length + " did not update any rows: [" + items.get(i) + "]", 1);
           }
         }
       }

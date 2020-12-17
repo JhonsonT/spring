@@ -1,13 +1,19 @@
 <a name="イントロダクション"></a>
+
 # イントロダクション
 
 ## MyBatis-Spring とは？
 
-MyBatis-Spring によって MyBatis と Spring をシームレスに連携させることができます。このライブラリを使えば、MyBatis のステートメントを Spring のトランザクション内で実行することもできますし、Mapper や `SqlSession` の生成、他の Bean への注入、MyBatis の例外から Spring の `DataAccessException` への変換、さらには MyBatis や Spring, MyBatis-Spring に依存しないコードでアプリケーションを構築することも可能になります。
+MyBatis-Spring によって MyBatis と Spring をシームレスに連携させることができます。このライブラリを使えば、MyBatis のステートメントを Spring
+のトランザクション内で実行することもできますし、Mapper や `SqlSession` の生成、他の Bean への注入、MyBatis の例外から Spring の `DataAccessException` への変換、さらには
+MyBatis や Spring, MyBatis-Spring に依存しないコードでアプリケーションを構築することも可能になります。
 
 ## 動機
 
-Spring バージョン 2 は iBATIS バージョン 2 しかサポートしていません。Spring 3 の開発時に MyBatis 3 への対応が検討されました（こちらの [チケット](https://jira.springsource.org/browse/SPR-5991) 参照）が、Spring 3 が MyBatis 3 よりも前に正式リリースを迎えたため、残念ながら実装は見送られました。Spring 開発陣としては、未リリースの MyBatis 3 に合わせたコードをリリースしたくなかったという事情があり、Spring 側での正式対応は保留となっていました。MyBatis コミュニティの中で Spring 対応への要望が強かったため、有志によって Spring との連携を行う MyBatis のサブプロジェクトが立ち上げられました。
+Spring バージョン 2 は iBATIS バージョン 2 しかサポートしていません。Spring 3 の開発時に MyBatis 3
+への対応が検討されました（こちらの [チケット](https://jira.springsource.org/browse/SPR-5991) 参照）が、Spring 3 が MyBatis 3
+よりも前に正式リリースを迎えたため、残念ながら実装は見送られました。Spring 開発陣としては、未リリースの MyBatis 3 に合わせたコードをリリースしたくなかったという事情があり、Spring
+側での正式対応は保留となっていました。MyBatis コミュニティの中で Spring 対応への要望が強かったため、有志によって Spring との連携を行う MyBatis のサブプロジェクトが立ち上げられました。
 
 ## 動作条件
 
@@ -23,9 +29,8 @@ MyBatis-Spring は以下のバージョンを必要とします。
 ## 謝辞
 
 このプロジェクトの実現にご協力頂いた次の方々に感謝します（アルファベット順）:
-Eduardo Macarron, Hunter Presnall, Putthiphong Boonphong（コーディング、テスト、ドキュメント作成）;
-Andrius Juozapaitis, Giovanni Cuccu, Mike Lanyon, Raj Nagappan, Tomas Pinos（コントリビューション）;
-Simone Tripodi（メンバーを集め、MyBatis のサブプロジェクトとしてまとめてくれました）
+Eduardo Macarron, Hunter Presnall, Putthiphong Boonphong（コーディング、テスト、ドキュメント作成）; Andrius Juozapaitis, Giovanni Cuccu, Mike
+Lanyon, Raj Nagappan, Tomas Pinos（コントリビューション）; Simone Tripodi（メンバーを集め、MyBatis のサブプロジェクトとしてまとめてくれました）
 このプロジェクトは彼らの協力なしには実現できなかったでしょう。
 
 ## このドキュメントの改善にご協力ください...

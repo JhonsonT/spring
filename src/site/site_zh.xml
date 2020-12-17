@@ -16,8 +16,9 @@
     limitations under the License.
 
 -->
-<project name="${project.name}" xmlns="http://maven.apache.org/DECORATION/1.7.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/DECORATION/1.7.0 http://maven.apache.org/xsd/decoration-1.7.0.xsd">
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="${project.name}"
+         xmlns="http://maven.apache.org/DECORATION/1.7.0"
+         xsi:schemaLocation="http://maven.apache.org/DECORATION/1.7.0 http://maven.apache.org/xsd/decoration-1.7.0.xsd">
 
   <body>
     <menu name="参考文档">
@@ -25,17 +26,17 @@
       <item name="入门" href="getting-started.html"/>
       <item name="SqlSessionFactoryBean" href="factorybean.html"/>
       <item name="事务" href="transactions.html" collapse="true">
-        <item href="transactions.html#configuration" name="标准配置" />
-        <item href="transactions.html#container" name="交由容器管理事务" />
-        <item href="transactions.html#programmatic" name="编程式事务管理" />
+        <item href="transactions.html#configuration" name="标准配置"/>
+        <item href="transactions.html#container" name="交由容器管理事务"/>
+        <item href="transactions.html#programmatic" name="编程式事务管理"/>
       </item>
       <item name="使用 SqlSession" href="sqlsession.html" collapse="true">
-        <item href="sqlsession.html#SqlSessionTemplate" name="SqlSessionTemplate" />
-        <item href="sqlsession.html#SqlSessionDaoSupport" name="SqlSessionDaoSupport" />
+        <item href="sqlsession.html#SqlSessionTemplate" name="SqlSessionTemplate"/>
+        <item href="sqlsession.html#SqlSessionDaoSupport" name="SqlSessionDaoSupport"/>
       </item>
       <item name="注入映射器" href="mappers.html" collapse="true">
-        <item href="mappers.html#register" name="注册映射器" />
-        <item href="mappers.html#scan" name="发现映射器" />
+        <item href="mappers.html#register" name="注册映射器"/>
+        <item href="mappers.html#scan" name="发现映射器"/>
       </item>
       <item name="使用 Spring Boot" href="boot.html"/>
       <item name="使用 MyBatis API" href="using-api.html"/>

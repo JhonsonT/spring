@@ -17,16 +17,16 @@
 
 -->
 <Configuration status="WARN">
-    <Appenders>
-        <Console name="Console" target="SYSTEM_OUT">
-            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
-        </Console>
-    </Appenders>
-    <Loggers>
-        <Logger name="org.mybatis.spring" level="debug"/>
-        <Logger name="org.springframework.jdbc" level="trace"/>
-        <Root level="warn">
-            <AppenderRef ref="Console"/>
-        </Root>
-    </Loggers>
+  <Appenders>
+    <Console name="Console" target="SYSTEM_OUT">
+      <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+    </Console>
+  </Appenders>
+  <Loggers>
+    <Logger name="org.mybatis.spring" level="debug"/>
+    <Logger name="org.springframework.jdbc" level="trace"/>
+    <Root level="warn">
+      <AppenderRef ref="Console"/>
+    </Root>
+  </Loggers>
 </Configuration>

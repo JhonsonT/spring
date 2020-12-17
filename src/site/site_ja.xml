@@ -16,8 +16,9 @@
     limitations under the License.
 
 -->
-<project name="${project.name}" xmlns="http://maven.apache.org/DECORATION/1.7.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/DECORATION/1.7.0 http://maven.apache.org/xsd/decoration-1.7.0.xsd">
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="${project.name}"
+         xmlns="http://maven.apache.org/DECORATION/1.7.0"
+         xsi:schemaLocation="http://maven.apache.org/DECORATION/1.7.0 http://maven.apache.org/xsd/decoration-1.7.0.xsd">
 
   <body>
     <menu name="Reference Documentation">
@@ -25,17 +26,17 @@
       <item name="スタートガイド" href="getting-started.html"/>
       <item name="SqlSessionFactoryBean" href="factorybean.html"/>
       <item name="トランザクション" href="transactions.html" collapse="true">
-        <item href="transactions.html#configuration" name="設定" />
-        <item href="transactions.html#container" name="コンテナ管理トランザクション（CMT）" />
-        <item href="transactions.html#programmatic" name="プログラム的制御" />
+        <item href="transactions.html#configuration" name="設定"/>
+        <item href="transactions.html#container" name="コンテナ管理トランザクション（CMT）"/>
+        <item href="transactions.html#programmatic" name="プログラム的制御"/>
       </item>
       <item name="SqlSession の利用" href="sqlsession.html" collapse="true">
-        <item href="sqlsession.html#SqlSessionTemplate" name="SqlSessionTemplate" />
-        <item href="sqlsession.html#SqlSessionDaoSupport" name="SqlSessionDaoSupport" />
+        <item href="sqlsession.html#SqlSessionTemplate" name="SqlSessionTemplate"/>
+        <item href="sqlsession.html#SqlSessionDaoSupport" name="SqlSessionDaoSupport"/>
       </item>
       <item name="Mapper の注入" href="mappers.html" collapse="true">
-        <item href="mappers.html#register" name="Mapper の登録" />
-        <item href="mappers.html#scan" name="Mapper の自動検出" />
+        <item href="mappers.html#register" name="Mapper の登録"/>
+        <item href="mappers.html#scan" name="Mapper の自動検出"/>
       </item>
       <item name="Spring Boot" href="boot.html"/>
       <item name="MyBatis API の使用" href="using-api.html"/>

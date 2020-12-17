@@ -1,12 +1,12 @@
 /**
  * Copyright 2010-2020 the original author or authors.
- *
+ * <p>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *    http://www.apache.org/licenses/LICENSE-2.0
- *
+ * <p>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p>
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -15,14 +15,8 @@
  */
 package org.mybatis.spring;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.fail;
-
 import com.mockrunner.mock.jdbc.MockConnection;
 import com.mockrunner.mock.jdbc.MockResultSet;
-
-import java.sql.SQLException;
-
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
@@ -30,6 +24,11 @@ import org.junit.jupiter.api.BeforeEach;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.dao.support.PersistenceExceptionTranslator;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
+
+import java.sql.SQLException;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.fail;
 
 public abstract class AbstractMyBatisSpringTest {
 
@@ -106,7 +105,7 @@ public abstract class AbstractMyBatisSpringTest {
 
   protected void assertExecuteCount(int count) {
     assertThat(connection.getPreparedStatementResultSetHandler().getExecutedStatements().size())
-        .as("should have executed %d SQL statements", count).isEqualTo(count);
+      .as("should have executed %d SQL statements", count).isEqualTo(count);
   }
 
   protected void assertConnectionClosed(MockConnection connection) {
@@ -122,7 +121,7 @@ public abstract class AbstractMyBatisSpringTest {
   protected MockConnection createMockConnection() {
     // this query must be the same as the query in TestMapper.xml
     MockResultSet rs = new MockResultSet("SELECT 1");
-    rs.addRow(new Object[] { 1 });
+    rs.addRow(new Object[]{1});
 
     MockConnection con = new MockConnection();
     con.getPreparedStatementResultSetHandler().prepareResultSet("SELECT 1", rs);

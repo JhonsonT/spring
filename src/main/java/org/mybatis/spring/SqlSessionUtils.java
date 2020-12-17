@@ -1,12 +1,12 @@
 /**
  * Copyright 2010-2020 the original author or authors.
- *
+ * <p>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *    http://www.apache.org/licenses/LICENSE-2.0
- *
+ * <p>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p>
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -14,8 +14,6 @@
  * limitations under the License.
  */
 package org.mybatis.spring;
-
-import static org.springframework.util.Assert.notNull;
 
 import org.apache.ibatis.exceptions.PersistenceException;
 import org.apache.ibatis.mapping.Environment;
@@ -31,6 +29,8 @@ import org.springframework.dao.support.PersistenceExceptionTranslator;
 import org.springframework.jdbc.datasource.DataSourceUtils;
 import org.springframework.transaction.support.TransactionSynchronizationAdapter;
 import org.springframework.transaction.support.TransactionSynchronizationManager;
+
+import static org.springframework.util.Assert.notNull;
 
 /**
  * Handles MyBatis SqlSession life cycle. It can register and get SqlSessions from Spring
@@ -89,7 +89,7 @@ public final class SqlSessionUtils {
    * @see SpringManagedTransactionFactory
    */
   public static SqlSession getSqlSession(SqlSessionFactory sessionFactory, ExecutorType executorType,
-      PersistenceExceptionTranslator exceptionTranslator) {
+                                         PersistenceExceptionTranslator exceptionTranslator) {
 
     notNull(sessionFactory, NO_SQL_SESSION_FACTORY_SPECIFIED);
     notNull(executorType, NO_EXECUTOR_TYPE_SPECIFIED);
@@ -126,7 +126,7 @@ public final class SqlSessionUtils {
    *          sqlSession used for registration.
    */
   private static void registerSessionHolder(SqlSessionFactory sessionFactory, ExecutorType executorType,
-      PersistenceExceptionTranslator exceptionTranslator, SqlSession session) {
+                                            PersistenceExceptionTranslator exceptionTranslator, SqlSession session) {
     SqlSessionHolder holder;
     if (TransactionSynchronizationManager.isSynchronizationActive()) {
       Environment environment = sessionFactory.getConfiguration().getEnvironment();
@@ -137,21 +137,21 @@ public final class SqlSessionUtils {
         holder = new SqlSessionHolder(session, executorType, exceptionTranslator);
         TransactionSynchronizationManager.bindResource(sessionFactory, holder);
         TransactionSynchronizationManager
-            .registerSynchronization(new SqlSessionSynchronization(holder, sessionFactory));
+          .registerSynchronization(new SqlSessionSynchronization(holder, sessionFactory));
         holder.setSynchronizedWithTransaction(true);
         holder.requested();
       } else {
         if (TransactionSynchronizationManager.getResource(environment.getDataSource()) == null) {
           LOGGER.debug(() -> "SqlSession [" + session
-              + "] was not registered for synchronization because DataSource is not transactional");
+            + "] was not registered for synchronization because DataSource is not transactional");
         } else {
           throw new TransientDataAccessResourceException(
-              "SqlSessionFactory must be using a SpringManagedTransactionFactory in order to use Spring transaction synchronization");
+            "SqlSessionFactory must be using a SpringManagedTransactionFactory in order to use Spring transaction synchronization");
         }
       }
     } else {
       LOGGER.debug(() -> "SqlSession [" + session
-          + "] was not registered for synchronization because synchronization is not active");
+        + "] was not registered for synchronization because synchronization is not active");
     }
 
   }
@@ -161,7 +161,7 @@ public final class SqlSessionUtils {
     if (holder != null && holder.isSynchronizedWithTransaction()) {
       if (holder.getExecutorType() != executorType) {
         throw new TransientDataAccessResourceException(
-            "Cannot change the ExecutorType when there is an existing transaction");
+          "Cannot change the ExecutorType when there is an existing transaction");
       }
 
       holder.requested();
@@ -284,7 +284,7 @@ public final class SqlSessionUtils {
         } catch (PersistenceException p) {
           if (this.holder.getPersistenceExceptionTranslator() != null) {
             DataAccessException translated = this.holder.getPersistenceExceptionTranslator()
-                .translateExceptionIfPossible(p);
+              .translateExceptionIfPossible(p);
             if (translated != null) {
               throw translated;
             }
@@ -303,7 +303,7 @@ public final class SqlSessionUtils {
       // because afterCompletion may be called from a different thread
       if (!this.holder.isOpen()) {
         LOGGER
-            .debug(() -> "Transaction synchronization deregistering SqlSession [" + this.holder.getSqlSession() + "]");
+          .debug(() -> "Transaction synchronization deregistering SqlSession [" + this.holder.getSqlSession() + "]");
         TransactionSynchronizationManager.unbindResource(sessionFactory);
         this.holderActive = false;
         LOGGER.debug(() -> "Transaction synchronization closing SqlSession [" + this.holder.getSqlSession() + "]");
@@ -320,7 +320,7 @@ public final class SqlSessionUtils {
         // afterCompletion may have been called from a different thread
         // so avoid failing if there is nothing in this one
         LOGGER
-            .debug(() -> "Transaction synchronization deregistering SqlSession [" + this.holder.getSqlSession() + "]");
+          .debug(() -> "Transaction synchronization deregistering SqlSession [" + this.holder.getSqlSession() + "]");
         TransactionSynchronizationManager.unbindResourceIfPossible(sessionFactory);
         this.holderActive = false;
         LOGGER.debug(() -> "Transaction synchronization closing SqlSession [" + this.holder.getSqlSession() + "]");

@@ -1,12 +1,12 @@
 /**
  * Copyright 2010-2020 the original author or authors.
- *
+ * <p>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *    http://www.apache.org/licenses/LICENSE-2.0
- *
+ * <p>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p>
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -14,14 +14,6 @@
  * limitations under the License.
  */
 package org.mybatis.spring.batch.builder;
-
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.sql.DataSource;
 
 import org.apache.ibatis.mapping.Environment;
 import org.apache.ibatis.session.Configuration;
@@ -38,11 +30,18 @@ import org.mockito.MockitoAnnotations;
 import org.mybatis.spring.batch.MyBatisPagingItemReader;
 import org.springframework.batch.item.ExecutionContext;
 
+import javax.sql.DataSource;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 /**
  * Tests for {@link MyBatisPagingItemReaderBuilder}.
  *
- * @since 2.0.0
  * @author Kazuki Shimizu
+ * @since 2.0.0
  */
 class MyBatisPagingItemReaderBuilderTest {
 
@@ -76,10 +75,10 @@ class MyBatisPagingItemReaderBuilderTest {
   void testConfiguration() throws Exception {
     // @formatter:off
     MyBatisPagingItemReader<Foo> itemReader = new MyBatisPagingItemReaderBuilder<Foo>()
-            .sqlSessionFactory(this.sqlSessionFactory)
-            .queryId("selectFoo")
-            .parameterValues(Collections.singletonMap("id", 1))
-            .build();
+      .sqlSessionFactory(this.sqlSessionFactory)
+      .queryId("selectFoo")
+      .parameterValues(Collections.singletonMap("id", 1))
+      .build();
     // @formatter:on
     itemReader.afterPropertiesSet();
 
@@ -101,11 +100,11 @@ class MyBatisPagingItemReaderBuilderTest {
   void testConfigurationSaveStateIsFalse() throws Exception {
     // @formatter:off
     MyBatisPagingItemReader<Foo> itemReader = new MyBatisPagingItemReaderBuilder<Foo>()
-            .sqlSessionFactory(this.sqlSessionFactory)
-            .queryId("selectFoo")
-            .parameterValues(Collections.singletonMap("id", 1))
-            .saveState(false)
-            .build();
+      .sqlSessionFactory(this.sqlSessionFactory)
+      .queryId("selectFoo")
+      .parameterValues(Collections.singletonMap("id", 1))
+      .saveState(false)
+      .build();
     // @formatter:on
     itemReader.afterPropertiesSet();
 
@@ -124,11 +123,11 @@ class MyBatisPagingItemReaderBuilderTest {
   void testConfigurationMaxItemCount() throws Exception {
     // @formatter:off
     MyBatisPagingItemReader<Foo> itemReader = new MyBatisPagingItemReaderBuilder<Foo>()
-            .sqlSessionFactory(this.sqlSessionFactory)
-            .queryId("selectFoo")
-            .parameterValues(Collections.singletonMap("id", 1))
-            .maxItemCount(2)
-            .build();
+      .sqlSessionFactory(this.sqlSessionFactory)
+      .queryId("selectFoo")
+      .parameterValues(Collections.singletonMap("id", 1))
+      .maxItemCount(2)
+      .build();
     // @formatter:on
     itemReader.afterPropertiesSet();
 
@@ -148,11 +147,11 @@ class MyBatisPagingItemReaderBuilderTest {
   void testConfigurationPageSize() throws Exception {
     // @formatter:off
     MyBatisPagingItemReader<Foo> itemReader = new MyBatisPagingItemReaderBuilder<Foo>()
-            .sqlSessionFactory(this.sqlSessionFactory)
-            .queryId("selectFoo")
-            .parameterValues(Collections.singletonMap("id", 1))
-            .pageSize(2)
-            .build();
+      .sqlSessionFactory(this.sqlSessionFactory)
+      .queryId("selectFoo")
+      .parameterValues(Collections.singletonMap("id", 1))
+      .pageSize(2)
+      .build();
     // @formatter:on
     itemReader.afterPropertiesSet();
 

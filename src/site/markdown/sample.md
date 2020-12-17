@@ -1,10 +1,13 @@
 <a name="Sample_Code"></a>
+
 # Sample Code
 
 <span class="label important">NOTE</span>
-See [JPetstore 6 demo](https://github.com/mybatis/jpetstore-6) to know about how to use Spring with a full web application server.
+See [JPetstore 6 demo](https://github.com/mybatis/jpetstore-6) to know about how to use Spring with a full web
+application server.
 
-You can check out sample code from the MyBatis-Spring [repo](https://github.com/mybatis/spring/tree/master/src/test/java/org/mybatis/spring/sample):
+You can check out sample code from the
+MyBatis-Spring [repo](https://github.com/mybatis/spring/tree/master/src/test/java/org/mybatis/spring/sample):
 
 Any of the samples can be run with JUnit 5.
 
@@ -29,11 +32,13 @@ public class FooService {
 }
 ```
 
-It is a transactional bean, so when the method is called, the transaction is started and the transaction is committed when the method ends without throwing an uncaught exception.
-Notice that transactional behaviour is configured with the `@Transactional` attribute. This is not required; any other way provided by Spring can be used to demarcate your transactions.
+It is a transactional bean, so when the method is called, the transaction is started and the transaction is committed
+when the method ends without throwing an uncaught exception. Notice that transactional behaviour is configured with
+the `@Transactional` attribute. This is not required; any other way provided by Spring can be used to demarcate your
+transactions.
 
-This service calls a data access layer built with MyBatis.
-This layer consists on a just an interface `UserMapper.java` that will be used with a dynamic proxy built by MyBatis at runtime and injected into the service by Spring.
+This service calls a data access layer built with MyBatis. This layer consists on a just an interface `UserMapper.java`
+that will be used with a dynamic proxy built by MyBatis at runtime and injected into the service by Spring.
 
 ```java
 public interface UserMapper {
@@ -43,7 +48,9 @@ public interface UserMapper {
 }
 ```
 
-Note that, for the sake of simplicity we used the interface `UserMapper.java` for the DAO scenario where a DAO is built with an interface and a implementation though in this case it would have been more adequate to use an interface called `UserDao.java` instead.
+Note that, for the sake of simplicity we used the interface `UserMapper.java` for the DAO scenario where a DAO is built
+with an interface and a implementation though in this case it would have been more adequate to use an interface
+called `UserDao.java` instead.
 
 We will see different ways to find the mapper interface, register it to Spring and inject it into the service bean:
 

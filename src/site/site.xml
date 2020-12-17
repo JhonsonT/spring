@@ -16,8 +16,9 @@
     limitations under the License.
 
 -->
-<project name="${project.name}" xmlns="http://maven.apache.org/DECORATION/1.8.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/DECORATION/1.8.0 http://maven.apache.org/xsd/decoration-1.8.0.xsd">
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="${project.name}"
+         xmlns="http://maven.apache.org/DECORATION/1.8.0"
+         xsi:schemaLocation="http://maven.apache.org/DECORATION/1.8.0 http://maven.apache.org/xsd/decoration-1.8.0.xsd">
 
   <body>
     <menu name="Reference Documentation">
@@ -25,17 +26,17 @@
       <item name="Getting Started" href="getting-started.html"/>
       <item name="SqlSessionFactoryBean" href="factorybean.html"/>
       <item name="Transactions" href="transactions.html" collapse="true">
-        <item href="transactions.html#configuration" name="Standard Configuration" />
-        <item href="transactions.html#container" name="Container Managed Transactions" />
-        <item href="transactions.html#programmatic" name="Programmatic" />
+        <item href="transactions.html#configuration" name="Standard Configuration"/>
+        <item href="transactions.html#container" name="Container Managed Transactions"/>
+        <item href="transactions.html#programmatic" name="Programmatic"/>
       </item>
       <item name="Using an SqlSession" href="sqlsession.html" collapse="true">
-        <item href="sqlsession.html#SqlSessionTemplate" name="SqlSessionTemplate" />
-        <item href="sqlsession.html#SqlSessionDaoSupport" name="SqlSessionDaoSupport" />
+        <item href="sqlsession.html#SqlSessionTemplate" name="SqlSessionTemplate"/>
+        <item href="sqlsession.html#SqlSessionDaoSupport" name="SqlSessionDaoSupport"/>
       </item>
       <item name="Injecting Mappers" href="mappers.html" collapse="true">
-        <item href="mappers.html#register" name="Registering a mapper" />
-        <item href="mappers.html#scan" name="Scanning for mappers" />
+        <item href="mappers.html#register" name="Registering a mapper"/>
+        <item href="mappers.html#scan" name="Scanning for mappers"/>
       </item>
       <item name="Spring Boot" href="boot.html"/>
       <item name="Using the MyBatis API" href="using-api.html"/>

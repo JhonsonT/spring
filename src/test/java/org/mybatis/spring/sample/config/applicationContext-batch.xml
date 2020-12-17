@@ -20,21 +20,21 @@
     A sample context that shows how to integrate MyBatis with Spring using
     a DAO setup for BATCH transactions.
 -->
-<beans xmlns="http://www.springframework.org/schema/beans"
-     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-     xsi:schemaLocation="
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns="http://www.springframework.org/schema/beans"
+       xsi:schemaLocation="
      http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-	<import resource="classpath:org/mybatis/spring/sample/config/applicationContext-infrastructure.xml"/>
+  <import resource="classpath:org/mybatis/spring/sample/config/applicationContext-infrastructure.xml"/>
 
-    <!-- To change the default ExecutorType, a custom SqlSessionTemplate is all that is needed. -->
-    <bean id="userMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
-        <property name="mapperInterface" value="org.mybatis.spring.sample.mapper.UserMapper" />
-        <property name="sqlSessionTemplate">
-          <bean class="org.mybatis.spring.SqlSessionTemplate">
-            <constructor-arg index="0" ref="sqlSessionFactory" />
-            <constructor-arg index="1" value="BATCH" />
-          </bean>
-        </property>
-    </bean>
+  <!-- To change the default ExecutorType, a custom SqlSessionTemplate is all that is needed. -->
+  <bean id="userMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+    <property name="mapperInterface" value="org.mybatis.spring.sample.mapper.UserMapper"/>
+    <property name="sqlSessionTemplate">
+      <bean class="org.mybatis.spring.SqlSessionTemplate">
+        <constructor-arg index="0" ref="sqlSessionFactory"/>
+        <constructor-arg index="1" value="BATCH"/>
+      </bean>
+    </property>
+  </bean>
 </beans>

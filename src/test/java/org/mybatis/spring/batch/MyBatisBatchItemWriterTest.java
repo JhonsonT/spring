@@ -1,12 +1,12 @@
 /**
  * Copyright 2010-2020 the original author or authors.
- *
+ * <p>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *    http://www.apache.org/licenses/LICENSE-2.0
- *
+ * <p>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p>
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -14,19 +14,6 @@
  * limitations under the License.
  */
 package org.mybatis.spring.batch;
-
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.BDDMockito.*;
-
-import java.time.Clock;
-import java.time.Instant;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 import org.apache.ibatis.executor.BatchResult;
 import org.apache.ibatis.session.ExecutorType;
@@ -41,6 +28,19 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.mybatis.spring.batch.domain.Employee;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.dao.InvalidDataAccessResourceUsageException;
+
+import java.time.Clock;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.BDDMockito.given;
 
 /**
  * @author Putthiphong Boonphong
@@ -73,7 +73,7 @@ class MyBatisBatchItemWriterTest {
     List<Employee> employees = Arrays.asList(new Employee(), new Employee());
 
     BatchResult batchResult = new BatchResult(null, null);
-    batchResult.setUpdateCounts(new int[] { 1, 0 });
+    batchResult.setUpdateCounts(new int[]{1, 0});
     List<BatchResult> batchResults = Collections.singletonList(batchResult);
 
     given(mockSqlSessionTemplate.flushStatements()).willReturn(batchResults);
@@ -121,7 +121,7 @@ class MyBatisBatchItemWriterTest {
     writer.setItemToParameterConverter(null);
 
     assertThrows(IllegalArgumentException.class, () -> writer.afterPropertiesSet(),
-        "A itemToParameterConverter is required.");
+      "A itemToParameterConverter is required.");
 
   }
 

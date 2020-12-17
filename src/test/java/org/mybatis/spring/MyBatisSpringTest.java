@@ -1,12 +1,12 @@
 /**
  * Copyright 2010-2020 the original author or authors.
- *
+ * <p>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *    http://www.apache.org/licenses/LICENSE-2.0
- *
+ * <p>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p>
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -15,15 +15,10 @@
  */
 package org.mybatis.spring;
 
-import static org.assertj.core.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.fail;
-
 import com.mockrunner.mock.ejb.MockUserTransaction;
 import com.mockrunner.mock.jdbc.MockConnection;
 import com.mockrunner.mock.jdbc.MockDataSource;
 import com.mockrunner.mock.jdbc.MockPreparedStatement;
-
 import org.apache.ibatis.exceptions.PersistenceException;
 import org.apache.ibatis.mapping.Environment;
 import org.apache.ibatis.session.ExecutorType;
@@ -37,6 +32,10 @@ import org.springframework.dao.TransientDataAccessResourceException;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.jta.JtaTransactionManager;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.fail;
 
 class MyBatisSpringTest extends AbstractMyBatisSpringTest {
 
@@ -170,7 +169,7 @@ class MyBatisSpringTest extends AbstractMyBatisSpringTest {
       status = txManager.getTransaction(new DefaultTransactionDefinition());
 
       assertThrows(TransientDataAccessResourceException.class,
-          () -> session = SqlSessionUtils.getSqlSession(sqlSessionFactory));
+        () -> session = SqlSessionUtils.getSqlSession(sqlSessionFactory));
       // fail("should not be able to get an SqlSession using non-Spring tx manager when there is an active Spring tx");
     } finally {
       // rollback required to close connection
@@ -230,7 +229,7 @@ class MyBatisSpringTest extends AbstractMyBatisSpringTest {
       session = SqlSessionUtils.getSqlSession(sqlSessionFactory);
 
       assertThrows(TransientDataAccessResourceException.class,
-          () -> session = SqlSessionUtils.getSqlSession(sqlSessionFactory, ExecutorType.BATCH, exceptionTranslator));
+        () -> session = SqlSessionUtils.getSqlSession(sqlSessionFactory, ExecutorType.BATCH, exceptionTranslator));
 
       // fail("should not be able to change the Executor type during an existing transaction");
     } finally {
@@ -595,7 +594,7 @@ class MyBatisSpringTest extends AbstractMyBatisSpringTest {
   private void setupBatchStatements() {
     // these queries must be the same as the query in TestMapper.xml
     connection.getPreparedStatementResultSetHandler()
-        .addPreparedStatement(new MockPreparedStatement(connection, "INSERT ? INTO test"));
+      .addPreparedStatement(new MockPreparedStatement(connection, "INSERT ? INTO test"));
 
     connection.getPreparedStatementResultSetHandler().prepareThrowsSQLException("INSERT fail");
   }

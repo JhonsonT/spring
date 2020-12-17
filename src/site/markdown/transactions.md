@@ -1,18 +1,25 @@
 <a name="Transactions"></a>
+
 # Transactions
 
 One of the primary reasons for using MyBatis-Spring is that it allows MyBatis to participate in Spring transactions.
-Rather than create a new transaction manager specific to MyBatis,  MyBatis-Spring leverages the existing `DataSourceTransactionManager` in Spring.
-      
-Once a Spring transaction manager is configured, you can configure transactions in Spring as you normally would. Both `@Transactional` annotations and AOP style configurations are supported.
-A single `SqlSession` object will be created and used for the duration of the transaction. This session will be committed or rolled back as appropriate when then transaction completes.
+Rather than create a new transaction manager specific to MyBatis, MyBatis-Spring leverages the
+existing `DataSourceTransactionManager` in Spring.
 
-MyBatis-Spring will transparently manage transactions once they are set up. There is no need for additional code in your DAO classes.
+Once a Spring transaction manager is configured, you can configure transactions in Spring as you normally would.
+Both `@Transactional` annotations and AOP style configurations are supported. A single `SqlSession` object will be
+created and used for the duration of the transaction. This session will be committed or rolled back as appropriate when
+then transaction completes.
+
+MyBatis-Spring will transparently manage transactions once they are set up. There is no need for additional code in your
+DAO classes.
 
 <a name="configuration"></a>
+
 ## Standard Configuration
 
-To enable Spring transaction processing, simply create a `DataSourceTransactionManager` in your Spring configuration file:
+To enable Spring transaction processing, simply create a `DataSourceTransactionManager` in your Spring configuration
+file:
 
 ```xml
 <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
@@ -30,15 +37,19 @@ public class DataSourceConfig {
 }
 ```
 
-The `DataSource` specified can be any JDBC `DataSource` you would normally use with Spring. This includes connection pools as well as `DataSource`s obtained through JNDI lookups.
+The `DataSource` specified can be any JDBC `DataSource` you would normally use with Spring. This includes connection
+pools as well as `DataSource`s obtained through JNDI lookups.
 
-Note that the `DataSource` specified for the transaction manager **must** be the same one that is used to create the `SqlSessionFactoryBean` or transaction management will not work.
+Note that the `DataSource` specified for the transaction manager **must** be the same one that is used to create
+the `SqlSessionFactoryBean` or transaction management will not work.
 
 <a name="container"></a>
+
 ## Container Managed Transactions
 
-If you are using a JEE container and would like Spring to participate in container managed transactions (CMT), then Spring should be configured with a `JtaTransactionManager` or one of its container specific subclasses.
-The easiest way to do this is to use the Spring transaction namespace or the `JtaTransactionManagerFactoryBean`:
+If you are using a JEE container and would like Spring to participate in container managed transactions (CMT), then
+Spring should be configured with a `JtaTransactionManager` or one of its container specific subclasses. The easiest way
+to do this is to use the Spring transaction namespace or the `JtaTransactionManagerFactoryBean`:
 
 ```xml
 <tx:jta-transaction-manager />
@@ -54,10 +65,13 @@ public class DataSourceConfig {
 }
 ```
 
-In this configuration, MyBatis will behave like any other Spring transactional resource configured with CMT. Spring will automatically use any existing container transaction and attach an `SqlSession` to it.
-If no transaction is started and one is needed based on the transaction configuration, Spring will start a new container managed transaction.
+In this configuration, MyBatis will behave like any other Spring transactional resource configured with CMT. Spring will
+automatically use any existing container transaction and attach an `SqlSession` to it. If no transaction is started and
+one is needed based on the transaction configuration, Spring will start a new container managed transaction.
 
-Note that if you want to use CMT and do **not** want to use Spring transaction management, you **must not** configure any Spring transaction manager and you **must** also configure the `SqlSessionFactoryBean` to use the base MyBatis `ManagedTransactionFactory`:
+Note that if you want to use CMT and do **not** want to use Spring transaction management, you **must not** configure
+any Spring transaction manager and you **must** also configure the `SqlSessionFactoryBean` to use the base
+MyBatis `ManagedTransactionFactory`:
 
 ```xml
 <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
@@ -82,17 +96,23 @@ public class MyBatisConfig {
 ```
 
 <a name="programmatic"></a>
+
 ## Programmatic Transaction Management
 
-MyBatis `SqlSession` provides you with specific methods to handle transactions programmatically.
-But when using MyBatis-Spring your beans will be injected with a Spring managed `SqlSession` or a Spring managed mapper. That means that Spring will **always** handle your transactions.
+MyBatis `SqlSession` provides you with specific methods to handle transactions programmatically. But when using
+MyBatis-Spring your beans will be injected with a Spring managed `SqlSession` or a Spring managed mapper. That means
+that Spring will **always** handle your transactions.
 
-You cannot call `SqlSession.commit()`, `SqlSession.rollback()` or `SqlSession.close()` over a Spring managed `SqlSession`.
-If you try to do so, a `UnsupportedOperationException` exception will be thrown. Note these methods are not exposed in injected mapper classes.
+You cannot call `SqlSession.commit()`, `SqlSession.rollback()` or `SqlSession.close()` over a Spring
+managed `SqlSession`. If you try to do so, a `UnsupportedOperationException` exception will be thrown. Note these
+methods are not exposed in injected mapper classes.
 
-Regardless of your JDBC connection's autocommit setting, any execution of a `SqlSession` data method or any call to a mapper method outside a Spring transaction will be automatically committed.
+Regardless of your JDBC connection's autocommit setting, any execution of a `SqlSession` data method or any call to a
+mapper method outside a Spring transaction will be automatically committed.
 
-If you want to control your transactions programmatically please refer to [the Spring reference document(Data Access -Programmatic transaction management-)](https://docs.spring.io/spring/docs/current/spring-framework-reference/data-access.html#transaction-programmatic). This code shows how to handle a transaction manually using the `PlatformTransactionManager`.
+If you want to control your transactions programmatically please refer
+to [the Spring reference document(Data Access -Programmatic transaction management-)](https://docs.spring.io/spring/docs/current/spring-framework-reference/data-access.html#transaction-programmatic)
+. This code shows how to handle a transaction manually using the `PlatformTransactionManager`.
 
 ```java
 public class UserService {

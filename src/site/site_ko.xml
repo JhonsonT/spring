@@ -16,8 +16,9 @@
     limitations under the License.
 
 -->
-<project name="${project.name}" xmlns="http://maven.apache.org/DECORATION/1.7.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/DECORATION/1.7.0 http://maven.apache.org/xsd/decoration-1.7.0.xsd">
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="${project.name}"
+         xmlns="http://maven.apache.org/DECORATION/1.7.0"
+         xsi:schemaLocation="http://maven.apache.org/DECORATION/1.7.0 http://maven.apache.org/xsd/decoration-1.7.0.xsd">
 
   <body>
     <menu name="참조 문서">
@@ -25,17 +26,17 @@
       <item name="시작하기" href="getting-started.html"/>
       <item name="SqlSessionFactoryBean" href="factorybean.html"/>
       <item name="트랜잭션" href="transactions.html" collapse="true">
-        <item name="표준 설정" href="transactions.html#configuration" />
-        <item name="컨테이너 관리 트랜잭션" href="transactions.html#container" />
-        <item name="수동으로 트랜잭션 관리" href="transactions.html#programmatic" />
+        <item name="표준 설정" href="transactions.html#configuration"/>
+        <item name="컨테이너 관리 트랜잭션" href="transactions.html#container"/>
+        <item name="수동으로 트랜잭션 관리" href="transactions.html#programmatic"/>
       </item>
       <item name="SqlSession 사용" href="sqlsession.html" collapse="true">
-        <item name="SqlSessionTemplate" href="sqlsession.html#SqlSessionTemplate" />
-        <item name="SqlSessionDaoSupport" href="sqlsession.html#SqlSessionDaoSupport" />
+        <item name="SqlSessionTemplate" href="sqlsession.html#SqlSessionTemplate"/>
+        <item name="SqlSessionDaoSupport" href="sqlsession.html#SqlSessionDaoSupport"/>
       </item>
       <item name="매퍼 주입" href="mappers.html" collapse="true">
-        <item name="매퍼 등록" href="mappers.html#register" />
-        <item name="매퍼 검색" href="mappers.html#scan" />
+        <item name="매퍼 등록" href="mappers.html#register"/>
+        <item name="매퍼 검색" href="mappers.html#scan"/>
       </item>
       <item name="스프링 부트" href="boot.html"/>
       <item name="마이바티스 API 사용" href="using-api.html"/>

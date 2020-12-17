@@ -1,20 +1,26 @@
 <a name="Spring_Batch"></a>
+
 # Spring Batch
 
-Desde la versión 1.1.0 MyBatis-Spring proporciona dos beans para construir aplicaciones Spring Batch: `MyBatisPagingItemReader` y `MyBatisCursorItemReader` y `MyBatisBatchItemWriter`.
-Also, As of version 2.0.0 provides three builder classes for supporting the Java Configuration: the `MyBatisPagingItemReaderBuilder`, the `MyBatisCursorItemReaderBuilder` and the `MyBatisBatchItemWriterBuilder`.
+Desde la versión 1.1.0 MyBatis-Spring proporciona dos beans para construir aplicaciones Spring
+Batch: `MyBatisPagingItemReader` y `MyBatisCursorItemReader` y `MyBatisBatchItemWriter`. Also, As of version 2.0.0
+provides three builder classes for supporting the Java Configuration: the `MyBatisPagingItemReaderBuilder`,
+the `MyBatisCursorItemReaderBuilder` and the `MyBatisBatchItemWriterBuilder`.
 
 <span class="label important">NOTA</span>
-Esta sección se refiere a [Spring Batch](http://static.springsource.org/spring-batch/) y no a sesiones batch de MyBatis. Para obtener información sobre las sesiones batch ve a la sección [Usnado un SqlSession](sqlsession.html).
+Esta sección se refiere a [Spring Batch](http://static.springsource.org/spring-batch/) y no a sesiones batch de MyBatis.
+Para obtener información sobre las sesiones batch ve a la sección [Usnado un SqlSession](sqlsession.html).
 
 ## MyBatisPagingItemReader
 
 Este bean es un `ItemReader` que lee registros de una base de datos usando paginación.
 
-Ejecuta la sentencia especificada mediante la propiedad `setQueryId` para obtener los datos. La sentencia se ejecuta usando peticiones paginadas del tamaño indicando en la propiedad `setPageSize`.
-Al llamar al método `read()` éste devuelve el objeto que corresponde a la posición actual y solicita más páginas si es necesario.
+Ejecuta la sentencia especificada mediante la propiedad `setQueryId` para obtener los datos. La sentencia se ejecuta
+usando peticiones paginadas del tamaño indicando en la propiedad `setPageSize`. Al llamar al método `read()` éste
+devuelve el objeto que corresponde a la posición actual y solicita más páginas si es necesario.
 
-El reader recibe algunos parametros estándar y la SQL deberá hacer uso de algunos de ellos para construir un resultset del tamaño requerido. Los parametros son:
+El reader recibe algunos parametros estándar y la SQL deberá hacer uso de algunos de ellos para construir un resultset
+del tamaño requerido. Los parametros son:
 
 * `_page`: el número de página a leer (comenzando en 0)
 * `_pagesize`: el tamaño de la página, es decir, el número de filas a devolver
@@ -36,6 +42,7 @@ A continuación se muestra un ejemplo de configuración:
   <property name="queryId" value="com.my.name.space.batch.EmployeeMapper.getEmployee" />
 </bean>
 ```
+
 ```java
 @Configuration
 public class BatchAppConfig {
@@ -60,6 +67,7 @@ public class BatchAppConfig {
   p:pageSize="200"
   scope="step"/>
 ```
+
 ```xml
 <util:map id="datesParameters" scope="step">
   <entry key="yesterday" value="#{jobExecutionContext['EXTRACTION_START_DATE']}"/>
@@ -104,13 +112,17 @@ public class BatchAppConfig {
 El ejemplo anterior hace uso de tres cosas distintas:
 
 * `sqlSessionFactory`: Puedes tu propio sessionFactory, podría ser útil si quires leer de varias bases de datos.
-* `queryId`: Si el código accede a varias tablas, y tienes distintas sentencias de consulta, puede ser interesante usar ficheros de mapeo distintos con namespaces distintos.
-  En este caso, al referirte a la query, no olvides incluir el namespace correspondiente.
-* `parameterValues`: Puedes pasar parametros adicionales en este mapa, el ejemplo de arriba usa un mapa que se construye usando una expresion SpEL y obteniendo valores del <code>jobExecutionContext</code>.
-  Las claves del mapa puede usarse en el fichero mapper de MyBatis (por ejemplo: *yesterday* se puede usar como `#{yesterday,jdbcType=TIMESTAMP}`).
-  Observa que el mapa y el reader se consutruyen en un solo `step` para que sea posible usar la expresión SpEL con el `jobExecutionContext`.
-  Adicionalmente si los type handlers de MyBatis están configurados correctamente puedes pasar instancias personalizadas como los parametros del ejemplo que son fechas JodaTime.
-* `pageSize`: Si le flujo batch está configurado con un tamaño de bloque (chunk size), es importante pasar esta información al reader, y eso se hace mediante esta propiedad.
+* `queryId`: Si el código accede a varias tablas, y tienes distintas sentencias de consulta, puede ser interesante usar
+  ficheros de mapeo distintos con namespaces distintos. En este caso, al referirte a la query, no olvides incluir el
+  namespace correspondiente.
+* `parameterValues`: Puedes pasar parametros adicionales en este mapa, el ejemplo de arriba usa un mapa que se construye
+  usando una expresion SpEL y obteniendo valores del <code>jobExecutionContext</code>. Las claves del mapa puede usarse
+  en el fichero mapper de MyBatis (por ejemplo: *yesterday* se puede usar como `#{yesterday,jdbcType=TIMESTAMP}`).
+  Observa que el mapa y el reader se consutruyen en un solo `step` para que sea posible usar la expresión SpEL con
+  el `jobExecutionContext`. Adicionalmente si los type handlers de MyBatis están configurados correctamente puedes pasar
+  instancias personalizadas como los parametros del ejemplo que son fechas JodaTime.
+* `pageSize`: Si le flujo batch está configurado con un tamaño de bloque (chunk size), es importante pasar esta
+  información al reader, y eso se hace mediante esta propiedad.
 
 ## MyBatisCursorItemReader
 
@@ -119,10 +131,12 @@ Este bean es un `ItemReader` que lee registros de la base de datos usando un cur
 <span class="label important">NOTA</span>
 Para usar este bean necesitas al menos MyBatis 3.4.0 o superior.
 
-Ejecuta la sentencia especificada mediante la propiedad `setQueryId` para obtener los datos usando el método `selectCursor()`.
-Al llamar al método `read()` se devolverá el siguiente elemento del cursor hasta que no quede ninguno por devolver.
+Ejecuta la sentencia especificada mediante la propiedad `setQueryId` para obtener los datos usando el
+método `selectCursor()`. Al llamar al método `read()` se devolverá el siguiente elemento del cursor hasta que no quede
+ninguno por devolver.
 
-El reader usa una conexión separada para que la sentencia no participe en ninguna transacción creada como parte del proceso del step.
+El reader usa una conexión separada para que la sentencia no participe en ninguna transacción creada como parte del
+proceso del step.
 
 Cuando se usar un cursor puedes usar una sentencia convencional:
 
@@ -140,6 +154,7 @@ A continuación se muestra un ejemplo de configuración:
   <property name="queryId" value="com.my.name.space.batch.EmployeeMapper.getEmployee" />
 </bean>
 ```
+
 ```java
 @Configuration
 public class BatchAppConfig {
@@ -155,10 +170,11 @@ public class BatchAppConfig {
 
 ## MyBatisBatchItemWriter
 
-Es un `ItemWriter` que usa las capacidades de batch de `SqlSessionTemplate` para ejecutar sentencias batch para todos los elementos (items) proporcionados.
-El `SqlSessionFactory` debe configurarse con un executor de tipo `BATCH`.
+Es un `ItemWriter` que usa las capacidades de batch de `SqlSessionTemplate` para ejecutar sentencias batch para todos
+los elementos (items) proporcionados. El `SqlSessionFactory` debe configurarse con un executor de tipo `BATCH`.
 
-Ejecuta la sentencia indicada en la propiedad `statementId` cuando se invoca a `write()`. Se supone que `write()` se invoca dentro de una transacción.
+Ejecuta la sentencia indicada en la propiedad `statementId` cuando se invoca a `write()`. Se supone que `write()` se
+invoca dentro de una transacción.
 
 A continuación se muestra un ejemplo de configuración:
 
@@ -184,9 +200,11 @@ public class BatchAppConfig {
 
 **Converting a item that read using ItemReader to an any parameter object:**
 
-By default behavior, the `MyBatisBatchItemWriter` passes a item that read using `ItemReader` (or convert by `ItemProcessor`) to the MyBatis(`SqlSession#update()`) as the parameter object.
-If you want to customize a parameter object that passes to the MyBatis, you can realize to use the `itemToParameterConverter` option. For example using `itemToParameterConverter` option, you can passes any objects other than the item object to the MyBatis.
-Follows below a sample:
+By default behavior, the `MyBatisBatchItemWriter` passes a item that read using `ItemReader` (or convert
+by `ItemProcessor`) to the MyBatis(`SqlSession#update()`) as the parameter object. If you want to customize a parameter
+object that passes to the MyBatis, you can realize to use the `itemToParameterConverter` option. For example
+using `itemToParameterConverter` option, you can passes any objects other than the item object to the MyBatis. Follows
+below a sample:
 
 At first, you create a custom converter class (or factory method). The following sample uses a factory method.
 
@@ -244,14 +262,19 @@ public class BatchAppConfig {
 
 **Escribiendo en distintas tablas usando composite writers (con algunos condicionantes):**
 
-Esta técnica sólo puede usarse con MyBatis 3.2+, por que había un [error](http://code.google.com/p/mybatis/issues/detail?id=741) en las versiones anteriores que hacían que el writer funcionara de forma incorrecta.
+Esta técnica sólo puede usarse con MyBatis 3.2+, por que había
+un [error](http://code.google.com/p/mybatis/issues/detail?id=741) en las versiones anteriores que hacían que el writer
+funcionara de forma incorrecta.
 
-Si el batch necesita escribir datos complejos, como registros con asociaciones, o en distintas bases de datos, entonces es necesario sortear el problema de que los insert statements solo pueden escribir en una tabla.
-Para conseguir esto debes preparar un <em>Item</em> para que sea escrito por el writer. Sin embargo, dependiendo de las circunstancias puede ser interesante usar la siguiente técnica.
-El truco siguiente funciona con items con asociaciones simples o con tablas no relacionadas.
+Si el batch necesita escribir datos complejos, como registros con asociaciones, o en distintas bases de datos, entonces
+es necesario sortear el problema de que los insert statements solo pueden escribir en una tabla. Para conseguir esto
+debes preparar un <em>Item</em> para que sea escrito por el writer. Sin embargo, dependiendo de las circunstancias puede
+ser interesante usar la siguiente técnica. El truco siguiente funciona con items con asociaciones simples o con tablas
+no relacionadas.
 
-Elabora el `item` de forma que *contenta* todos los resgistros distintos. Supon que para cada `item` hay una *Interaction* que tiene una asociación *InteractionMetadata* y dos filas no asociadas *VisitorInteraction* and *CustomerInteraction*.
-El objeto contenedor será de la siguiente forma:
+Elabora el `item` de forma que *contenta* todos los resgistros distintos. Supon que para cada `item` hay una *
+Interaction* que tiene una asociación *InteractionMetadata* y dos filas no asociadas *VisitorInteraction* and *
+CustomerInteraction*. El objeto contenedor será de la siguiente forma:
 
 ```java
 public class InteractionRecordToWriteInMultipleTables {
@@ -261,14 +284,16 @@ public class InteractionRecordToWriteInMultipleTables {
   // ...
 }
 ```
+
 ```java
 public class Interaction {
   private final InteractionMetadata interactionMetadata;
 }
 ```
 
-Entonces en la configuración de spring habrá un `CompositeItemWriter` que usará writers delegados configurados especificamente para cada tipo de registro.
-Fijate que el *InteractionMetadata* es una asociacióin en el ejemplo por lo que debe ser escrita antes para que la Interaction pueda recibir la clave generada.
+Entonces en la configuración de spring habrá un `CompositeItemWriter` que usará writers delegados configurados
+especificamente para cada tipo de registro. Fijate que el *InteractionMetadata* es una asociacióin en el ejemplo por lo
+que debe ser escrita antes para que la Interaction pueda recibir la clave generada.
 
 ```xml
 <bean id="interactionsItemWriter" class="org.springframework.batch.item.support.CompositeItemWriter">
@@ -310,6 +335,7 @@ Cada writer delegados se configura como sea necesario, por ejemplo para *Interac
   p:sqlSessionTemplate-ref="batchSessionTemplate"
   p:statementId="com.my.name.space.batch.InteractionRecordToWriteInMultipleTablesMapper.insertInteractionMetadata"/>
 ```
+
 ```xml
 <bean id="interactionWriter"
   class="org.mybatis.spring.batch.MyBatisBatchItemWriter"
@@ -330,6 +356,7 @@ Ahora es debe elaborarse el fichero de mapeo para cada tipo de registro, de la s
   <!-- the insert statement using #{interaction.interactionMetadata.property,jdbcType=...} -->
 </insert>
 ```
+
 ```xml
 <insert id="insertInteraction"
   parameterType="com.my.batch.interactions.item.InteractionRecordToWriteInMultipleTables"
@@ -343,9 +370,12 @@ Ahora es debe elaborarse el fichero de mapeo para cada tipo de registro, de la s
 </insert>
 ```
 
-Lo que sucede es que primeramente se llamará a `insertInteractionMetadata`, y la sentencia de update está configurada para devolver las claves autogeneradas (`keyProperty` y `keyColumn`).
-Una vez que el `InteractionMetadata` se ha almacenado por esta sentencia se puede ejecutar la siguiente para escribir el objeto padre `Interaction` mediante `insertInteraction`.
+Lo que sucede es que primeramente se llamará a `insertInteractionMetadata`, y la sentencia de update está configurada
+para devolver las claves autogeneradas (`keyProperty` y `keyColumn`). Una vez que el `InteractionMetadata` se ha
+almacenado por esta sentencia se puede ejecutar la siguiente para escribir el objeto padre `Interaction`
+mediante `insertInteraction`.
 
-***Sin embargo, ten en cuenta que los drivers JDBC se comportan distinto en este aspecto. A la fecha en la que se escribe esto
-el driver H2 1.3.168 solo devuelve el último ID incluso en modo BATCH (see `org.h2.jdbc.JdbcStatement#getGeneratedKeys`),
-mientras que el driver JDBC de MySQL se comporta como es de esperar y devuelve todos los IDs.***
+***Sin embargo, ten en cuenta que los drivers JDBC se comportan distinto en este aspecto. A la fecha en la que se
+escribe esto el driver H2 1.3.168 solo devuelve el último ID incluso en modo BATCH (
+see `org.h2.jdbc.JdbcStatement#getGeneratedKeys`), mientras que el driver JDBC de MySQL se comporta como es de esperar y
+devuelve todos los IDs.***

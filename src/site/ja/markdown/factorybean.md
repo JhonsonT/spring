@@ -1,7 +1,9 @@
 <a name="SqlSessionFactoryBean"></a>
+
 # SqlSessionFactoryBean
 
-基となる MyBatis では、`SqlSessionFactory` をビルドする際 `SqlSessionFactoryBuilder` を使いましたが、MyBatis-Spring では、`SqlSessionFactoryBean` を使います。
+基となる MyBatis では、`SqlSessionFactory` をビルドする際 `SqlSessionFactoryBuilder` を使いましたが、MyBatis-Spring では、`SqlSessionFactoryBean`
+を使います。
 
 ## 設定
 
@@ -13,9 +15,10 @@ Spring の XML 設定ファイルに次の Bean を定義することで Factory
 </bean>
 ```
 
-`SqlSessionFactoryBean` は Spring の `FactoryBean` インターフェイス（[the Spring documentation(Core Technologies -Customizing instantiation logic with a FactoryBean-](https://docs.spring.io/spring/docs/current/spring-framework-reference/core.html#beans-factory-extension-factorybean) を参照してください）を実装しています。
-これはつまり、最終的に Spring が生成するのは `SqlSessionFactoryBean` ではなく、Factory の `getObject()` メソッドによって返されるオブジェクトであるということです。
-上記の設定では、Spring は `SqlSessionFactory` を生成し、`sqlSessionFactory` という名前の Bean として登録します。
+`SqlSessionFactoryBean` は Spring の `FactoryBean`
+インターフェイス（[the Spring documentation(Core Technologies -Customizing instantiation logic with a FactoryBean-](https://docs.spring.io/spring/docs/current/spring-framework-reference/core.html#beans-factory-extension-factorybean)
+を参照してください）を実装しています。 これはつまり、最終的に Spring が生成するのは `SqlSessionFactoryBean` ではなく、Factory の `getObject()`
+メソッドによって返されるオブジェクトであるということです。 上記の設定では、Spring は `SqlSessionFactory` を生成し、`sqlSessionFactory` という名前の Bean として登録します。
 これに相当する Java のコードは下記のようになるでしょう。
 
 ```java
@@ -37,18 +40,18 @@ public class MyBatisConfig {
 
 `SqlSessionFactory` で必須のプロパティは JDBC の `DataSource` のみです。 どのような `DataSource` でも構いません。Spring でデータベース接続を定義する通常の手順で定義してください。
 
-`configLocation` は、MyBatis の XML 設定ファイルの場所を指定する際に使用します。これは、例えば基になる MyBatis の設定の一部を変更したい場合などに必要となります。
-よくあるのは `>settings>` や `<typeAliases>` などの設定です。
+`configLocation` は、MyBatis の XML 設定ファイルの場所を指定する際に使用します。これは、例えば基になる MyBatis の設定の一部を変更したい場合などに必要となります。 よくあるのは `>settings>`
+や `<typeAliases>` などの設定です。
 
 ここで指定する設定ファイルは、完全な MyBatis 設定ファイルである必要はありません。 環境、データソース、MyBatis のトランザクションマネージャーに関する設定は**無視されます**。
 `SqlSessionFactoryBean` は、独自にカスタマイズした MyBatis `Environment` を生成し、必要に応じてこれらの値を設定するようになっています。
 
 設定ファイルの指定が必要とされるもう一つの例は、MyBatis の Mapper XML ファイルが Mapper クラスとは別のクラスパスに存在する場合です。
-このような構成にする場合、次のどちらかの方法で設定することができます。最初の方法は、MyBatis の設定ファイルの `<mappers>` で各 XML ファイルのクラスパスを指定する方法です。
-そしてもう一つは、Factory Bean の `mapperLocations` を使った方法です。
+このような構成にする場合、次のどちらかの方法で設定することができます。最初の方法は、MyBatis の設定ファイルの `<mappers>` で各 XML ファイルのクラスパスを指定する方法です。 そしてもう一つは、Factory Bean
+の `mapperLocations` を使った方法です。
 
-`mapperLocations` プロパティは Resource Location のリストを取り、ここで MyBatis の XML Mapper ファイルの場所を指定することができます。
-Ant スタイルのパターン文字列を使って特定のディレクトリ内の全ファイルを指定したり、内包するディレクトリを再帰的に検索対象にすることもできます。次の例を見てください。
+`mapperLocations` プロパティは Resource Location のリストを取り、ここで MyBatis の XML Mapper ファイルの場所を指定することができます。 Ant
+スタイルのパターン文字列を使って特定のディレクトリ内の全ファイルを指定したり、内包するディレクトリを再帰的に検索対象にすることもできます。次の例を見てください。
 
 ```xml
 <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
@@ -75,6 +78,7 @@ Container-Managed トランザクションを利用する環境では、`transac
   </property>
 </bean>
 ```
+
 ```xml
 <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
   <property name="dataSource" ref="dataSource" />
@@ -84,8 +88,7 @@ Container-Managed トランザクションを利用する環境では、`transac
 ```
 
 <span class="label important">NOTE</span>
-1.3.0より、`configuration` プロパティが追加されました。このプロパティには、MyBatisのXML設定ファイルを使わずに`Configuration`インスタンスを直接指定することができます。
-次の例を見てください。
+1.3.0より、`configuration` プロパティが追加されました。このプロパティには、MyBatisのXML設定ファイルを使わずに`Configuration`インスタンスを直接指定することができます。 次の例を見てください。
 
 ```xml
 <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">

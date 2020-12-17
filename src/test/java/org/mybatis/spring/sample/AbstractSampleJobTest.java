@@ -1,12 +1,12 @@
 /**
  * Copyright 2010-2020 the original author or authors.
- *
+ * <p>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *    http://www.apache.org/licenses/LICENSE-2.0
- *
+ * <p>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p>
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -14,11 +14,6 @@
  * limitations under the License.
  */
 package org.mybatis.spring.sample;
-
-import java.util.List;
-import java.util.Map;
-
-import javax.sql.DataSource;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -29,6 +24,10 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.core.namedparam.EmptySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+
+import javax.sql.DataSource;
+import java.util.List;
+import java.util.Map;
 
 abstract class AbstractSampleJobTest {
 
@@ -46,7 +45,7 @@ abstract class AbstractSampleJobTest {
     Assertions.assertEquals("COMPLETED", jobExecution.getExitStatus().getExitCode());
 
     List<Map<String, Object>> persons = jdbcTemplate.queryForList("SELECT * FROM persons ORDER BY person_id",
-        EmptySqlParameterSource.INSTANCE);
+      EmptySqlParameterSource.INSTANCE);
     Assertions.assertEquals(5, persons.size());
     Object operationBy = persons.get(0).get("OPERATION_BY");
     Object operationAt = persons.get(0).get("OPERATION_AT");

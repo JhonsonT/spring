@@ -1,12 +1,12 @@
 /**
  * Copyright 2010-2020 the original author or authors.
- *
+ * <p>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *    http://www.apache.org/licenses/LICENSE-2.0
- *
+ * <p>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p>
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -15,18 +15,7 @@
  */
 package org.mybatis.spring.mapper;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.fail;
-
 import com.mockrunner.mock.jdbc.MockDataSource;
-
-import java.util.List;
-import java.util.Properties;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -47,6 +36,16 @@ import org.springframework.beans.factory.support.GenericBeanDefinition;
 import org.springframework.context.support.GenericApplicationContext;
 import org.springframework.context.support.SimpleThreadScope;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
+import java.util.Properties;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 class MapperScannerConfigurerTest {
   private GenericApplicationContext applicationContext;
@@ -109,7 +108,7 @@ class MapperScannerConfigurerTest {
     applicationContext.getBean("scopedTarget.scopedProxyMapper");
 
     assertThat(Stream.of(applicationContext.getBeanDefinitionNames()).filter(x -> x.startsWith("scopedTarget")))
-        .hasSize(1);
+      .hasSize(1);
 
   }
 
@@ -120,7 +119,7 @@ class MapperScannerConfigurerTest {
     applicationContext.registerBeanDefinition("beanNameGenerator", definition);
 
     applicationContext.getBeanDefinition("mapperScanner").getPropertyValues().add("nameGenerator",
-        new RuntimeBeanReference("beanNameGenerator"));
+      new RuntimeBeanReference("beanNameGenerator"));
 
     startContext();
 
@@ -134,7 +133,7 @@ class MapperScannerConfigurerTest {
   @Test
   void testMarkerInterfaceScan() {
     applicationContext.getBeanDefinition("mapperScanner").getPropertyValues().add("markerInterface",
-        MapperInterface.class);
+      MapperInterface.class);
 
     startContext();
 
@@ -163,7 +162,7 @@ class MapperScannerConfigurerTest {
   @Test
   void testMarkerInterfaceAndAnnotationScan() {
     applicationContext.getBeanDefinition("mapperScanner").getPropertyValues().add("markerInterface",
-        MapperInterface.class);
+      MapperInterface.class);
     applicationContext.getBeanDefinition("mapperScanner").getPropertyValues().add("annotationClass", Component.class);
 
     startContext();
@@ -215,10 +214,10 @@ class MapperScannerConfigurerTest {
     startContext();
 
     List<String> scopedProxyTargetBeans = Stream.of(applicationContext.getBeanDefinitionNames())
-        .filter(x -> x.startsWith("scopedTarget")).collect(Collectors.toList());
+      .filter(x -> x.startsWith("scopedTarget")).collect(Collectors.toList());
     assertThat(scopedProxyTargetBeans).hasSize(6).contains("scopedTarget.scopedProxyMapper",
-        "scopedTarget.annotatedMapper", "scopedTarget.annotatedMapperZeroMethods", "scopedTarget.mapperInterface",
-        "scopedTarget.mapperSubinterface", "scopedTarget.mapperChildInterface");
+      "scopedTarget.annotatedMapper", "scopedTarget.annotatedMapperZeroMethods", "scopedTarget.mapperInterface",
+      "scopedTarget.mapperSubinterface", "scopedTarget.mapperChildInterface");
 
     for (String scopedProxyTargetBean : scopedProxyTargetBeans) {
       {
@@ -250,7 +249,7 @@ class MapperScannerConfigurerTest {
     setupSqlSessionFactory("sqlSessionFactory2");
 
     applicationContext.getBeanDefinition("mapperScanner").getPropertyValues().add("sqlSessionFactoryBeanName",
-        "sqlSessionFactory2");
+      "sqlSessionFactory2");
 
     startContext();
 
@@ -271,7 +270,7 @@ class MapperScannerConfigurerTest {
     applicationContext.registerBeanDefinition("sqlSessionTemplate", definition);
 
     applicationContext.getBeanDefinition("mapperScanner").getPropertyValues().add("sqlSessionTemplateBeanName",
-        "sqlSessionTemplate");
+      "sqlSessionTemplate");
 
     startContext();
 
@@ -288,7 +287,7 @@ class MapperScannerConfigurerTest {
 
     // use a property placeholder for the session factory name
     applicationContext.getBeanDefinition("mapperScanner").getPropertyValues().add("sqlSessionFactoryBeanName",
-        "${sqlSessionFactoryBeanNameProperty}");
+      "${sqlSessionFactoryBeanNameProperty}");
 
     Properties props = new java.util.Properties();
     props.put("sqlSessionFactoryBeanNameProperty", "sqlSessionFactory2");
@@ -317,7 +316,7 @@ class MapperScannerConfigurerTest {
     startContext();
 
     assertThat(applicationContext.getBean("mapperInterface").getClass())
-        .as("scanner should not overwrite existing bean definition").isSameAs(Object.class);
+      .as("scanner should not overwrite existing bean definition").isSameAs(Object.class);
   }
 
   @Test
@@ -373,7 +372,7 @@ class MapperScannerConfigurerTest {
   void testScanWithMapperFactoryBeanClass() {
     DummyMapperFactoryBean.clear();
     applicationContext.getBeanDefinition("mapperScanner").getPropertyValues().add("mapperFactoryBeanClass",
-        DummyMapperFactoryBean.class);
+      DummyMapperFactoryBean.class);
 
     startContext();
 
@@ -390,7 +389,7 @@ class MapperScannerConfigurerTest {
     startContext();
 
     assertThat(applicationContext.getBeanDefinition("annotatedMapper")
-        .getAttribute(ClassPathMapperScanner.FACTORY_BEAN_OBJECT_TYPE)).isEqualTo(AnnotatedMapper.class.getName());
+      .getAttribute(ClassPathMapperScanner.FACTORY_BEAN_OBJECT_TYPE)).isEqualTo(AnnotatedMapper.class.getName());
   }
 
   private void setupSqlSessionFactory(String name) {

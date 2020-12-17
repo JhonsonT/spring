@@ -1,12 +1,12 @@
 /**
  * Copyright 2010-2020 the original author or authors.
- *
+ * <p>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *    http://www.apache.org/licenses/LICENSE-2.0
- *
+ * <p>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p>
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -15,15 +15,18 @@
  */
 package org.mybatis.spring.type;
 
-import java.lang.reflect.Proxy;
-import java.util.concurrent.atomic.AtomicInteger;
-
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.logging.Logger;
 import org.mybatis.logging.LoggerFactory;
 import org.mybatis.spring.mapper.MapperFactoryBean;
 
+import java.lang.reflect.Proxy;
+import java.util.concurrent.atomic.AtomicInteger;
+
 public class DummyMapperFactoryBean<T> extends MapperFactoryBean<T> {
+
+  private static final Logger LOGGER = LoggerFactory.getLogger(DummyMapperFactoryBean.class);
+  private static final AtomicInteger mapperInstanceCount = new AtomicInteger(0);
 
   public DummyMapperFactoryBean() {
     super();
@@ -33,9 +36,13 @@ public class DummyMapperFactoryBean<T> extends MapperFactoryBean<T> {
     super(mapperInterface);
   }
 
-  private static final Logger LOGGER = LoggerFactory.getLogger(DummyMapperFactoryBean.class);
+  public static int getMapperCount() {
+    return mapperInstanceCount.get();
+  }
 
-  private static final AtomicInteger mapperInstanceCount = new AtomicInteger(0);
+  public static void clear() {
+    mapperInstanceCount.set(0);
+  }
 
   @Override
   protected void checkDaoConfig() {
@@ -62,21 +69,13 @@ public class DummyMapperFactoryBean<T> extends MapperFactoryBean<T> {
 
     // just a dummy implementation example
     return (SqlSessionFactory) Proxy.newProxyInstance(SqlSessionFactory.class.getClassLoader(),
-        new Class[] { SqlSessionFactory.class }, (proxy, method, args) -> {
-          if ("getConfiguration".equals(method.getName())) {
-            return getSqlSession().getConfiguration();
-          }
-          // dummy
-          return null;
-        });
-  }
-
-  public static int getMapperCount() {
-    return mapperInstanceCount.get();
-  }
-
-  public static void clear() {
-    mapperInstanceCount.set(0);
+      new Class[]{SqlSessionFactory.class}, (proxy, method, args) -> {
+        if ("getConfiguration".equals(method.getName())) {
+          return getSqlSession().getConfiguration();
+        }
+        // dummy
+        return null;
+      });
   }
 
 }

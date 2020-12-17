@@ -1,10 +1,12 @@
 <a name="示例代码"></a>
+
 # 示例代码
 
 <span class="label important">提示</span>
 查看 [JPetstore 6 demo](https://github.com/mybatis/jpetstore-6) 了解如何在完整的 Web 应用服务器上使用 Spring。
 
-您可以在 MyBatis-Spring 的 [代码仓库](https://github.com/mybatis/spring/tree/master/src/test/java/org/mybatis/spring/sample) 中查看示例代码：
+您可以在 MyBatis-Spring 的 [代码仓库](https://github.com/mybatis/spring/tree/master/src/test/java/org/mybatis/spring/sample)
+中查看示例代码：
 
 所有示例都能在 JUnit 5 下运行。
 
@@ -29,7 +31,8 @@ public class FooService {
 }
 ```
 
-它是一个事务 bean，所以当调用它的任何方法时，事务被启动，在方法结束且没有抛出任何未经检查的异常的时候事务将会被提交。注意，事务的行为可以通过 `@Transactional` 的属性进行配置。这不是必需的；你可以使用 Spring 提供的任何其他方式来划分你的事务范围。
+它是一个事务 bean，所以当调用它的任何方法时，事务被启动，在方法结束且没有抛出任何未经检查的异常的时候事务将会被提交。注意，事务的行为可以通过 `@Transactional` 的属性进行配置。这不是必需的；你可以使用 Spring
+提供的任何其他方式来划分你的事务范围。
 
 此服务调用使用 MyBatis 构建的数据访问层.。该层只包含一个接口，`UserMapper.java`，这将被 MyBatis 构建的动态代理使用，在运行时通过 Spring 注入到服务之中。
 

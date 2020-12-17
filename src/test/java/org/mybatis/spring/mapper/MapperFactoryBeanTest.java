@@ -1,12 +1,12 @@
 /**
  * Copyright 2010-2020 the original author or authors.
- *
+ * <p>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *    http://www.apache.org/licenses/LICENSE-2.0
- *
+ * <p>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p>
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -15,13 +15,8 @@
  */
 package org.mybatis.spring.mapper;
 
-import static org.assertj.core.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.fail;
-
 import com.mockrunner.mock.jdbc.MockConnection;
 import com.mockrunner.mock.jdbc.MockDataSource;
-
 import org.apache.ibatis.mapping.Environment;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.transaction.jdbc.JdbcTransactionFactory;
@@ -35,6 +30,10 @@ import org.mybatis.spring.TestMapper;
 import org.springframework.dao.TransientDataAccessResourceException;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.fail;
 
 class MapperFactoryBeanTest extends AbstractMyBatisSpringTest {
 
@@ -87,7 +86,7 @@ class MapperFactoryBeanTest extends AbstractMyBatisSpringTest {
       SqlSessionFactory sqlSessionFactory = factoryBean.getObject();
 
       assertThrows(org.apache.ibatis.binding.BindingException.class,
-          () -> find(new SqlSessionTemplate(sqlSessionFactory), false));
+        () -> find(new SqlSessionTemplate(sqlSessionFactory), false));
       // fail("TestDao's mapper xml should not be loaded");
     } catch (MyBatisSystemException mbse) {
       // unwrap exception so the exact MyBatis exception can be tested
@@ -149,8 +148,8 @@ class MapperFactoryBeanTest extends AbstractMyBatisSpringTest {
       fail("should not be able to get an SqlSession using non-Spring tx manager when there is an active Spring tx");
     } catch (TransientDataAccessResourceException e) {
       assertThat(e.getMessage())
-          .isEqualTo("SqlSessionFactory must be using a SpringManagedTransactionFactory in order to use"
-              + " Spring transaction synchronization");
+        .isEqualTo("SqlSessionFactory must be using a SpringManagedTransactionFactory in order to use"
+          + " Spring transaction synchronization");
     } finally {
       // rollback required to close connection
       txManager.rollback(status);

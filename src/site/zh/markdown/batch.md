@@ -1,11 +1,14 @@
 <a name="使用_Spring_Batch"></a>
+
 # 使用 Spring Batch
 
-MyBatis-Spring 1.1.0 发布以后，提供了三个 bean 以供构建 Spring Batch 应用程序：`MyBatisPagingItemReader`、`MyBatisCursorItemReader` 和 `MyBatisBatchItemWriter`。
-而在 2.0.0 中，还提供了三个建造器（builder）类来对 Java 配置提供支持：`MyBatisPagingItemReaderBuilder`、`MyBatisCursorItemReaderBuilder` 和 `MyBatisBatchItemWriterBuilder`。
+MyBatis-Spring 1.1.0 发布以后，提供了三个 bean 以供构建 Spring Batch 应用程序：`MyBatisPagingItemReader`、`MyBatisCursorItemReader`
+和 `MyBatisBatchItemWriter`。 而在 2.0.0 中，还提供了三个建造器（builder）类来对 Java 配置提供支持：`MyBatisPagingItemReaderBuilder`
+、`MyBatisCursorItemReaderBuilder` 和 `MyBatisBatchItemWriterBuilder`。
 
 <span class="label important">提示</span>
-本章是关于 [Spring Batch](http://static.springsource.org/spring-batch/) 的，而不是关于 MyBatis 的批量 `SqlSession`。要查找关于批量 session 的更多信息，请参考 [使用 SqlSession](sqlsession.html) 一章。
+本章是关于 [Spring Batch](http://static.springsource.org/spring-batch/) 的，而不是关于 MyBatis 的批量 `SqlSession`。要查找关于批量 session
+的更多信息，请参考 [使用 SqlSession](sqlsession.html) 一章。
 
 ## MyBatisPagingItemReader
 
@@ -60,6 +63,7 @@ public class BatchAppConfig {
   p:pageSize="200"
   scope="step"/>
 ```
+
 ```xml
 <util:map id="datesParameters" scope="step">
   <entry key="yesterday" value="#{jobExecutionContext['EXTRACTION_START_DATE']}"/>
@@ -104,10 +108,12 @@ public class BatchAppConfig {
 上面的样例使用了几个东西：
 
 * `sqlSessionFactory：可以为 reader 指定你自定义的 sessionFactory，当你想从多个数据库中读取数据时尤其有用
-* `queryId`：指定在检索记录时要执行的查询的 ID，可以指定短的 ID 或是带命名空间的完整 ID。一般来说，你的应用可能从多个表或数据库中读取数据，因此会配置多个查询，可能会使用到在不同命名空间中的不同映射器。因此最好提供映射器文件的命名空间以便准确指定你想使用的查询 ID。
-* `parameterValues`：可以通过这个 map 传递多个附加的参数，上面的例子中就使用了一个由 Spring 构建的 map，并使用 SpEL 表达式从 `jobExecutionContext` 中获取信息。
-  而 map 的键将在映射器文件中被 MyBatis 使用（例如：*yesterday* 可以通过 `#{yesterday,jdbcType=TIMESTAMP}` 来读取）。注意，map 和 reader 都构建于 `step` 作用域，这样才能够在 Spring 表达式语言中使用 `jobExecutionContext`。
-  另外，如果正确配置了 MyBatis 的类型处理器，你可以将自定义的实例像参数那样传递到 map 中，比如将参数类型换成 JodaTime。
+* `queryId`：指定在检索记录时要执行的查询的 ID，可以指定短的 ID 或是带命名空间的完整
+  ID。一般来说，你的应用可能从多个表或数据库中读取数据，因此会配置多个查询，可能会使用到在不同命名空间中的不同映射器。因此最好提供映射器文件的命名空间以便准确指定你想使用的查询 ID。
+* `parameterValues`：可以通过这个 map 传递多个附加的参数，上面的例子中就使用了一个由 Spring 构建的 map，并使用 SpEL 表达式从 `jobExecutionContext` 中获取信息。 而 map
+  的键将在映射器文件中被 MyBatis 使用（例如：*yesterday* 可以通过 `#{yesterday,jdbcType=TIMESTAMP}` 来读取）。注意，map 和 reader 都构建于 `step`
+  作用域，这样才能够在 Spring 表达式语言中使用 `jobExecutionContext`。 另外，如果正确配置了 MyBatis 的类型处理器，你可以将自定义的实例像参数那样传递到 map 中，比如将参数类型换成
+  JodaTime。
 * `pageSize`：如果批处理流配置了块大小（chunk size），需要通过此属性将块大小告知 reader。
 
 ## MyBatisCursorItemReader
@@ -137,6 +143,7 @@ public class BatchAppConfig {
   <property name="queryId" value="com.my.name.space.batch.EmployeeMapper.getEmployee" />
 </bean>
 ```
+
 ```java
 @Configuration
 public class BatchAppConfig {
@@ -180,9 +187,8 @@ public class BatchAppConfig {
 
 **将 ItemReader 读取的记录转换为任意的参数对象：**
 
-默认情况下，`MyBatisBatchItemWriter` 会将 `ItemReader` 读取的对象（或 `ItemProcessor` 转换过的对象) 以参数对象的形式传递给 MyBatis（`SqlSession#update()`）。
-如果你想自定义传递给 MyBatis 的参数对象，可以使用 `itemToParameterConverter` 选项。使用该选项后，可以传递任意对象给 MyBatis。
-举个例子：
+默认情况下，`MyBatisBatchItemWriter` 会将 `ItemReader` 读取的对象（或 `ItemProcessor` 转换过的对象) 以参数对象的形式传递给 MyBatis（`SqlSession#update()`
+）。 如果你想自定义传递给 MyBatis 的参数对象，可以使用 `itemToParameterConverter` 选项。使用该选项后，可以传递任意对象给 MyBatis。 举个例子：
 
 首先，创建一个自定义的转换器类（或工厂方法）。以下例子使用了工厂方法。
 
@@ -245,7 +251,8 @@ public class BatchAppConfig {
 如果批量处理时需要写入复杂的数据，例如含有关联的记录，甚至是向多个数据库写入数据，你可能就需要一种办法来绕开 insert 语句只能插入到一个表中的限制。为了绕过此限制，批处理必须准备好要通过 writer 写入的*项*。
 然而，基于对被处理的数据的观察，可以尝试使用下面的方法来解决此问题。下面的方法能够工作于具有简单关联或不相关的多个表的项。
 
-在这种方法中，处理 Spring Batch 项的处理器中将会*持有*各种不同的记录。假设每个项都有一个与 *InteractionMetadata* 相关联的 *Interaction*，并且还有两个不相关的行 *VisitorInteraction* 和 *CustomerInteraction*，这时候持有器（holder）看起来像这样：
+在这种方法中，处理 Spring Batch 项的处理器中将会*持有*各种不同的记录。假设每个项都有一个与 *InteractionMetadata* 相关联的 *Interaction*，并且还有两个不相关的行 *
+VisitorInteraction* 和 *CustomerInteraction*，这时候持有器（holder）看起来像这样：
 
 ```java
 public class InteractionRecordToWriteInMultipleTables {
@@ -255,13 +262,15 @@ public class InteractionRecordToWriteInMultipleTables {
   // ...
 }
 ```
+
 ```java
 public class Interaction {
   private final InteractionMetadata interactionMetadata;
 }
 ```
 
-在 Spring 配置中要配置一个 `CompositeItemWriter`，它将会将写入操作委托到特定种类的 writer 上面去。注意 *InteractionMetadata* 在例子里面是一个关联，它需要首先被写入，这样 Interaction 才能获得更新之后的键。
+在 Spring 配置中要配置一个 `CompositeItemWriter`，它将会将写入操作委托到特定种类的 writer 上面去。注意 *InteractionMetadata* 在例子里面是一个关联，它需要首先被写入，这样
+Interaction 才能获得更新之后的键。
 
 ```xml
 <bean id="interactionsItemWriter" class="org.springframework.batch.item.support.CompositeItemWriter">
@@ -303,6 +312,7 @@ public class BatchAppConfig {
   p:sqlSessionTemplate-ref="batchSessionTemplate"
   p:statementId="com.my.name.space.batch.InteractionRecordToWriteInMultipleTablesMapper.insertInteractionMetadata"/>
 ```
+
 ```xml
 <bean id="interactionWriter"
   class="org.mybatis.spring.batch.MyBatisBatchItemWriter"
@@ -323,6 +333,7 @@ public class BatchAppConfig {
   <!-- 此 insert 语句使用了 #{interaction.interactionMetadata.property,jdbcType=...} -->
 </insert>
 ```
+
 ```xml
 <insert id="insertInteraction"
   parameterType="com.my.batch.interactions.item.InteractionRecordToWriteInMultipleTables"
@@ -339,5 +350,5 @@ public class BatchAppConfig {
 执行的时候会怎么样呢？首先，`insertInteractionMetadata` 将会被调用，update 语句被设置为返回由 JDBC 驱动返回的主键（参考 `keyProperty` 和 `keyColumn`）。
 由于 `InteractionMetadata` 的对象被此查询更新了，下一个查询将可以通过 `insertInteraction` 开展父对象 `Interaction` 的写入工作。
 
-***然而要注意，JDBC 驱动在这方面的行为并不总是与此相一致。在编写文档时，H2 的数据库驱动 1.3.168 甚至只在 BATCH 模式下返回最后的索引值（参考 `org.h2.jdbc.JdbcStatement#getGeneratedKeys`），
-而 MySQL 的 JDBC 驱动则工作良好并返回所有 ID。***
+***然而要注意，JDBC 驱动在这方面的行为并不总是与此相一致。在编写文档时，H2 的数据库驱动 1.3.168 甚至只在 BATCH
+模式下返回最后的索引值（参考 `org.h2.jdbc.JdbcStatement#getGeneratedKeys`）， 而 MySQL 的 JDBC 驱动则工作良好并返回所有 ID。***

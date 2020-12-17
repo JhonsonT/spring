@@ -1,12 +1,14 @@
 <a name="Primeros_pasos"></a>
+
 # Primeros pasos
 
-Este capítulo te mostrará en pocos pasos cómo instalar y configurar MyBatis-Spring y cómo construir
-una pequeña aplicación transaccional.
+Este capítulo te mostrará en pocos pasos cómo instalar y configurar MyBatis-Spring y cómo construir una pequeña
+aplicación transaccional.
 
 ## Instalación
 
-Para usar el módulo MyBatis-Spring, debes incluir el fichero `mybatis-spring-${project.version}.jar` y sus dependencias en el classpath.
+Para usar el módulo MyBatis-Spring, debes incluir el fichero `mybatis-spring-${project.version}.jar` y sus dependencias
+en el classpath.
 
 Si usas Maven simplemente añade la siguiente dependencia a tu pom.xml:
 
@@ -20,9 +22,11 @@ Si usas Maven simplemente añade la siguiente dependencia a tu pom.xml:
 
 ## Configuración rápida
 
-Para usar MyBatis con Spring necesitas definir al menos dos cosas en tu contexto Spring: una `SqlSessionFactory` y al menos un mapper interface.
+Para usar MyBatis con Spring necesitas definir al menos dos cosas en tu contexto Spring: una `SqlSessionFactory` y al
+menos un mapper interface.
 
-En MyBatis-Spring se usa un `SqlSessionFactoryBean` para crear una `SqlSessionFactory`. Para configurar la factory bean pon lo siguiente en tu fichero de configuración de Spring:
+En MyBatis-Spring se usa un `SqlSessionFactoryBean` para crear una `SqlSessionFactory`. Para configurar la factory bean
+pon lo siguiente en tu fichero de configuración de Spring:
 
 ```xml
 <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
@@ -42,7 +46,8 @@ public class MyBatisConfig {
 }
 ```
 
-Observa que la `SqlSessionFactory` requiere un `DataSource`. Éste puede ser cualquier `DataSource` y debe configurarse como cualquier otra conexión a base de datos de Spring.
+Observa que la `SqlSessionFactory` requiere un `DataSource`. Éste puede ser cualquier `DataSource` y debe configurarse
+como cualquier otra conexión a base de datos de Spring.
 
 Asumamos que tienes un mapper interface definido de la siguiente forma:
 
@@ -62,11 +67,13 @@ Este interface se añade a Spring usando un `MapperFactoryBean` de la siguiente 
 </bean>
 ```
 
-Observa que la clase del mapper indicada **debe** ser un interface, no una implementación. En este ejemplo se usan anotaciones para especificar la SQL, pero también es posible usar un fichero de mapeo XML.
+Observa que la clase del mapper indicada **debe** ser un interface, no una implementación. En este ejemplo se usan
+anotaciones para especificar la SQL, pero también es posible usar un fichero de mapeo XML.
 
-Una vez configurado, puedes inyectar mappers directamente en tus beans de servicio/negocio de la misma forma que inyectarías cualquier otro bean en Spring.
-La clase `MapperFactoryBean` se encargará de obtener una `SqlSession` y de cerrarla. Si hay una transación Spring en curso, la sesión se comitará o se hará rollback cuando la transacción finalice.
-Finalmente, cualquier excepción será traducida a una excepión `DataAccessException`s de Spring.
+Una vez configurado, puedes inyectar mappers directamente en tus beans de servicio/negocio de la misma forma que
+inyectarías cualquier otro bean en Spring. La clase `MapperFactoryBean` se encargará de obtener una `SqlSession` y de
+cerrarla. Si hay una transación Spring en curso, la sesión se comitará o se hará rollback cuando la transacción
+finalice. Finalmente, cualquier excepción será traducida a una excepión `DataAccessException`s de Spring.
 
 If you use the Java Configuration:
 

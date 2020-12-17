@@ -1,12 +1,12 @@
 /**
  * Copyright 2010-2020 the original author or authors.
- *
+ * <p>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *    http://www.apache.org/licenses/LICENSE-2.0
- *
+ * <p>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p>
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -14,23 +14,6 @@
  * limitations under the License.
  */
 package org.mybatis.spring;
-
-import static org.springframework.util.Assert.notNull;
-import static org.springframework.util.Assert.state;
-import static org.springframework.util.ObjectUtils.isEmpty;
-import static org.springframework.util.StringUtils.hasLength;
-import static org.springframework.util.StringUtils.tokenizeToStringArray;
-
-import java.io.IOException;
-import java.lang.reflect.Modifier;
-import java.sql.SQLException;
-import java.util.HashSet;
-import java.util.Optional;
-import java.util.Properties;
-import java.util.Set;
-import java.util.stream.Stream;
-
-import javax.sql.DataSource;
 
 import org.apache.ibatis.builder.xml.XMLConfigBuilder;
 import org.apache.ibatis.builder.xml.XMLMapperBuilder;
@@ -68,6 +51,22 @@ import org.springframework.core.type.classreading.MetadataReaderFactory;
 import org.springframework.jdbc.datasource.TransactionAwareDataSourceProxy;
 import org.springframework.util.ClassUtils;
 
+import javax.sql.DataSource;
+import java.io.IOException;
+import java.lang.reflect.Modifier;
+import java.sql.SQLException;
+import java.util.HashSet;
+import java.util.Optional;
+import java.util.Properties;
+import java.util.Set;
+import java.util.stream.Stream;
+
+import static org.springframework.util.Assert.notNull;
+import static org.springframework.util.Assert.state;
+import static org.springframework.util.ObjectUtils.isEmpty;
+import static org.springframework.util.StringUtils.hasLength;
+import static org.springframework.util.StringUtils.tokenizeToStringArray;
+
 /**
  * {@code FactoryBean} that creates a MyBatis {@code SqlSessionFactory}. This is the usual way to set up a shared
  * MyBatis {@code SqlSessionFactory} in a Spring application context; the SqlSessionFactory can then be passed to
@@ -87,7 +86,7 @@ import org.springframework.util.ClassUtils;
  * @see #setDataSource
  */
 public class SqlSessionFactoryBean
-    implements FactoryBean<SqlSessionFactory>, InitializingBean, ApplicationListener<ApplicationEvent> {
+  implements FactoryBean<SqlSessionFactory>, InitializingBean, ApplicationListener<ApplicationEvent> {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(SqlSessionFactoryBean.class);
 
@@ -305,7 +304,7 @@ public class SqlSessionFactoryBean
    *          The default type handler class for enum
    */
   public void setDefaultEnumTypeHandler(
-      @SuppressWarnings("rawtypes") Class<? extends TypeHandler> defaultEnumTypeHandler) {
+    @SuppressWarnings("rawtypes") Class<? extends TypeHandler> defaultEnumTypeHandler) {
     this.defaultEnumTypeHandler = defaultEnumTypeHandler;
   }
 
@@ -486,7 +485,7 @@ public class SqlSessionFactoryBean
     notNull(dataSource, "Property 'dataSource' is required");
     notNull(sqlSessionFactoryBuilder, "Property 'sqlSessionFactoryBuilder' is required");
     state((configuration == null && configLocation == null) || !(configuration != null && configLocation != null),
-        "Property 'configuration' and 'configLocation' can not specified with together");
+      "Property 'configuration' and 'configLocation' can not specified with together");
 
     this.sqlSessionFactory = buildSqlSessionFactory();
   }
@@ -519,7 +518,7 @@ public class SqlSessionFactoryBean
       targetConfiguration = xmlConfigBuilder.getConfiguration();
     } else {
       LOGGER.debug(
-          () -> "Property 'configuration' or 'configLocation' not specified, using default MyBatis Configuration");
+        () -> "Property 'configuration' or 'configLocation' not specified, using default MyBatis Configuration");
       targetConfiguration = new Configuration();
       Optional.ofNullable(this.configurationProperties).ifPresent(targetConfiguration::setVariables);
     }
@@ -530,8 +529,8 @@ public class SqlSessionFactoryBean
 
     if (hasLength(this.typeAliasesPackage)) {
       scanClasses(this.typeAliasesPackage, this.typeAliasesSuperType).stream()
-          .filter(clazz -> !clazz.isAnonymousClass()).filter(clazz -> !clazz.isInterface())
-          .filter(clazz -> !clazz.isMemberClass()).forEach(targetConfiguration.getTypeAliasRegistry()::registerAlias);
+        .filter(clazz -> !clazz.isAnonymousClass()).filter(clazz -> !clazz.isInterface())
+        .filter(clazz -> !clazz.isMemberClass()).forEach(targetConfiguration.getTypeAliasRegistry()::registerAlias);
     }
 
     if (!isEmpty(this.typeAliases)) {
@@ -550,8 +549,8 @@ public class SqlSessionFactoryBean
 
     if (hasLength(this.typeHandlersPackage)) {
       scanClasses(this.typeHandlersPackage, TypeHandler.class).stream().filter(clazz -> !clazz.isAnonymousClass())
-          .filter(clazz -> !clazz.isInterface()).filter(clazz -> !Modifier.isAbstract(clazz.getModifiers()))
-          .forEach(targetConfiguration.getTypeHandlerRegistry()::register);
+        .filter(clazz -> !clazz.isInterface()).filter(clazz -> !Modifier.isAbstract(clazz.getModifiers()))
+        .forEach(targetConfiguration.getTypeHandlerRegistry()::register);
     }
 
     if (!isEmpty(this.typeHandlers)) {
@@ -570,7 +569,7 @@ public class SqlSessionFactoryBean
       });
     }
     Optional.ofNullable(this.defaultScriptingLanguageDriver)
-        .ifPresent(targetConfiguration::setDefaultScriptingLanguage);
+      .ifPresent(targetConfiguration::setDefaultScriptingLanguage);
 
     if (this.databaseIdProvider != null) {// fix #64 set databaseId before parse mapper xmls
       try {
@@ -594,8 +593,8 @@ public class SqlSessionFactoryBean
     }
 
     targetConfiguration.setEnvironment(new Environment(this.environment,
-        this.transactionFactory == null ? new SpringManagedTransactionFactory() : this.transactionFactory,
-        this.dataSource));
+      this.transactionFactory == null ? new SpringManagedTransactionFactory() : this.transactionFactory,
+      this.dataSource));
 
     if (this.mapperLocations != null) {
       if (this.mapperLocations.length == 0) {
@@ -607,7 +606,7 @@ public class SqlSessionFactoryBean
           }
           try {
             XMLMapperBuilder xmlMapperBuilder = new XMLMapperBuilder(mapperLocation.getInputStream(),
-                targetConfiguration, mapperLocation.toString(), targetConfiguration.getSqlFragments());
+              targetConfiguration, mapperLocation.toString(), targetConfiguration.getSqlFragments());
             xmlMapperBuilder.parse();
           } catch (Exception e) {
             throw new NestedIOException("Failed to parse mapping resource: '" + mapperLocation + "'", e);
@@ -666,10 +665,10 @@ public class SqlSessionFactoryBean
   private Set<Class<?>> scanClasses(String packagePatterns, Class<?> assignableType) throws IOException {
     Set<Class<?>> classes = new HashSet<>();
     String[] packagePatternArray = tokenizeToStringArray(packagePatterns,
-        ConfigurableApplicationContext.CONFIG_LOCATION_DELIMITERS);
+      ConfigurableApplicationContext.CONFIG_LOCATION_DELIMITERS);
     for (String packagePattern : packagePatternArray) {
       Resource[] resources = RESOURCE_PATTERN_RESOLVER.getResources(ResourcePatternResolver.CLASSPATH_ALL_URL_PREFIX
-          + ClassUtils.convertClassNameToResourcePath(packagePattern) + "/**/*.class");
+        + ClassUtils.convertClassNameToResourcePath(packagePattern) + "/**/*.class");
       for (Resource resource : resources) {
         try {
           ClassMetadata classMetadata = METADATA_READER_FACTORY.getMetadataReader(resource).getClassMetadata();

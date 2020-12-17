@@ -21,18 +21,18 @@
     MapperScannerConfigurer. With this configuration, DAOs are created
     automatically by the scanner and do not have to be explicitly defined.
 -->
-<beans xmlns="http://www.springframework.org/schema/beans"
-     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-     xsi:schemaLocation="
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns="http://www.springframework.org/schema/beans"
+       xsi:schemaLocation="
      http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-    <!-- import datasource and transaction manager  -->
-    <import resource="classpath:org/mybatis/spring/sample/config/applicationContext-infrastructure.xml"/>
+  <!-- import datasource and transaction manager  -->
+  <import resource="classpath:org/mybatis/spring/sample/config/applicationContext-infrastructure.xml"/>
 
-    <!-- Scan for mappers and let them be autowired; notice there is no
-         UserDaoImplementation needed. The required SqlSessionFactory will be
-         autowired. -->
-    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-        <property name="basePackage" value="org.mybatis.spring.sample.mapper" />
-    </bean>
+  <!-- Scan for mappers and let them be autowired; notice there is no
+       UserDaoImplementation needed. The required SqlSessionFactory will be
+       autowired. -->
+  <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+    <property name="basePackage" value="org.mybatis.spring.sample.mapper"/>
+  </bean>
 </beans>

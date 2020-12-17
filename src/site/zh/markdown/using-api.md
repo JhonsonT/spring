@@ -1,7 +1,9 @@
 <a name="使用_MyBatis_API"></a>
+
 # 使用 MyBatis API
 
-使用 MyBatis-Spring，你可以继续直接使用 MyBatis 的 API。只需简单地使用 `SqlSessionFactoryBean` 在 Spring 中创建一个 `SqlSessionFactory`，然后按你的方式在代码中使用工厂即可。
+使用 MyBatis-Spring，你可以继续直接使用 MyBatis 的 API。只需简单地使用 `SqlSessionFactoryBean` 在 Spring 中创建一个 `SqlSessionFactory`
+，然后按你的方式在代码中使用工厂即可。
 
 ```java
 public class UserDaoImpl implements UserDao {
