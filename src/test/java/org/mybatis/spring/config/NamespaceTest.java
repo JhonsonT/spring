@@ -1,12 +1,12 @@
 /**
  * Copyright 2010-2020 the original author or authors.
- * <p>
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * <p>
- * http://www.apache.org/licenses/LICENSE-2.0
- * <p>
+ *
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -15,7 +15,17 @@
  */
 package org.mybatis.spring.config;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
+
 import com.mockrunner.mock.jdbc.MockDataSource;
+
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
@@ -36,15 +46,6 @@ import org.springframework.beans.factory.support.DefaultListableBeanFactory;
 import org.springframework.beans.factory.support.GenericBeanDefinition;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.context.support.GenericApplicationContext;
-
-import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.fail;
 
 /**
  * Test for the MapperScannerRegistrar.
@@ -81,7 +82,7 @@ class NamespaceTest {
   void testInterfaceScan() {
 
     applicationContext = new ClassPathXmlApplicationContext(
-      new String[]{"org/mybatis/spring/config/base-package.xml"}, setupSqlSessionFactory());
+        new String[] { "org/mybatis/spring/config/base-package.xml" }, setupSqlSessionFactory());
 
     startContext();
 
@@ -99,7 +100,7 @@ class NamespaceTest {
   void testNameGenerator() {
 
     applicationContext = new ClassPathXmlApplicationContext(
-      new String[]{"org/mybatis/spring/config/name-generator.xml"}, setupSqlSessionFactory());
+        new String[] { "org/mybatis/spring/config/name-generator.xml" }, setupSqlSessionFactory());
 
     startContext();
 
@@ -114,7 +115,7 @@ class NamespaceTest {
   void testMarkerInterfaceScan() {
 
     applicationContext = new ClassPathXmlApplicationContext(
-      new String[]{"org/mybatis/spring/config/marker-interface.xml"}, setupSqlSessionFactory());
+        new String[] { "org/mybatis/spring/config/marker-interface.xml" }, setupSqlSessionFactory());
 
     startContext();
 
@@ -129,8 +130,8 @@ class NamespaceTest {
   @Test
   void testAnnotationScan() {
 
-    applicationContext = new ClassPathXmlApplicationContext(new String[]{"org/mybatis/spring/config/annotation.xml"},
-      setupSqlSessionFactory());
+    applicationContext = new ClassPathXmlApplicationContext(new String[] { "org/mybatis/spring/config/annotation.xml" },
+        setupSqlSessionFactory());
 
     startContext();
 
@@ -146,7 +147,7 @@ class NamespaceTest {
   void testMarkerInterfaceAndAnnotationScan() {
 
     applicationContext = new ClassPathXmlApplicationContext(
-      new String[]{"org/mybatis/spring/config/marker-and-annotation.xml"}, setupSqlSessionFactory());
+        new String[] { "org/mybatis/spring/config/marker-and-annotation.xml" }, setupSqlSessionFactory());
 
     startContext();
 
@@ -162,7 +163,7 @@ class NamespaceTest {
   void testScanWithExplicitSqlSessionFactory() {
 
     applicationContext = new ClassPathXmlApplicationContext(
-      new String[]{"org/mybatis/spring/config/factory-ref.xml"}, setupSqlSessionFactory());
+        new String[] { "org/mybatis/spring/config/factory-ref.xml" }, setupSqlSessionFactory());
 
     startContext();
 
@@ -177,7 +178,7 @@ class NamespaceTest {
   void testScanWithExplicitSqlSessionTemplate() {
 
     applicationContext = new ClassPathXmlApplicationContext(
-      new String[]{"org/mybatis/spring/config/factory-ref.xml"}, setupSqlSessionTemplate());
+        new String[] { "org/mybatis/spring/config/factory-ref.xml" }, setupSqlSessionTemplate());
 
     startContext();
 
@@ -192,7 +193,7 @@ class NamespaceTest {
   void testScanWithMapperFactoryBeanClass() {
     DummyMapperFactoryBean.clear();
     applicationContext = new ClassPathXmlApplicationContext(
-      new String[]{"org/mybatis/spring/config/mapper-factory-bean-class.xml"}, setupSqlSessionTemplate());
+        new String[] { "org/mybatis/spring/config/mapper-factory-bean-class.xml" }, setupSqlSessionTemplate());
 
     startContext();
 
@@ -208,8 +209,8 @@ class NamespaceTest {
   @Test
   void testLazy() {
 
-    applicationContext = new ClassPathXmlApplicationContext(new String[]{"org/mybatis/spring/config/lazy.xml"},
-      setupSqlSessionTemplate());
+    applicationContext = new ClassPathXmlApplicationContext(new String[] { "org/mybatis/spring/config/lazy.xml" },
+        setupSqlSessionTemplate());
 
     startContext();
 
@@ -228,15 +229,15 @@ class NamespaceTest {
   @Test
   void testDefaultScope() {
     applicationContext = new ClassPathXmlApplicationContext(
-      new String[]{"org/mybatis/spring/config/default-scope.xml"}, false, setupSqlSessionTemplate());
+        new String[] { "org/mybatis/spring/config/default-scope.xml" }, false, setupSqlSessionTemplate());
 
     startContext();
 
     List<String> scopedProxyTargetBeans = Stream.of(applicationContext.getBeanDefinitionNames())
-      .filter(x -> x.startsWith("scopedTarget")).collect(Collectors.toList());
+        .filter(x -> x.startsWith("scopedTarget")).collect(Collectors.toList());
     assertThat(scopedProxyTargetBeans).hasSize(6).contains("scopedTarget.scopedProxyMapper",
-      "scopedTarget.annotatedMapper", "scopedTarget.annotatedMapperZeroMethods", "scopedTarget.mapperInterface",
-      "scopedTarget.mapperSubinterface", "scopedTarget.mapperChildInterface");
+        "scopedTarget.annotatedMapper", "scopedTarget.annotatedMapperZeroMethods", "scopedTarget.mapperInterface",
+        "scopedTarget.mapperSubinterface", "scopedTarget.mapperChildInterface");
 
     for (String scopedProxyTargetBean : scopedProxyTargetBeans) {
       {
@@ -246,7 +247,7 @@ class NamespaceTest {
       }
       {
         BeanDefinition definition = applicationContext.getBeanFactory()
-          .getBeanDefinition(scopedProxyTargetBean.substring(13));
+            .getBeanDefinition(scopedProxyTargetBean.substring(13));
         assertThat(definition.getBeanClassName()).isEqualTo("org.springframework.aop.scope.ScopedProxyFactoryBean");
         assertThat(definition.getScope()).isEqualTo("");
       }

@@ -1,12 +1,12 @@
 /**
  * Copyright 2010-2020 the original author or authors.
- * <p>
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * <p>
- * http://www.apache.org/licenses/LICENSE-2.0
- * <p>
+ *
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -14,6 +14,12 @@
  * limitations under the License.
  */
 package org.mybatis.spring.batch;
+
+import static org.junit.jupiter.api.Assertions.fail;
+
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 import org.apache.ibatis.cursor.Cursor;
 import org.apache.ibatis.session.ExecutorType;
@@ -27,12 +33,6 @@ import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.springframework.batch.item.ExecutionContext;
 import org.springframework.batch.item.ItemStreamException;
-
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.fail;
 
 /**
  * Tests for {@link MyBatisCursorItemReader}.
@@ -59,7 +59,7 @@ class MyBatisCursorItemReaderTest {
     Mockito.when(this.sqlSessionFactory.openSession(ExecutorType.SIMPLE)).thenReturn(this.sqlSession);
     Mockito.when(this.cursor.iterator()).thenReturn(getFoos().iterator());
     Mockito.when(this.sqlSession.selectCursor("selectFoo", Collections.singletonMap("id", 1)))
-      .thenThrow(new RuntimeException("error."));
+        .thenThrow(new RuntimeException("error."));
 
     MyBatisCursorItemReader<Foo> itemReader = new MyBatisCursorItemReader<>();
     itemReader.setSqlSessionFactory(this.sqlSessionFactory);

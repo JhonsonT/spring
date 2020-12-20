@@ -1,12 +1,12 @@
 /**
  * Copyright 2010-2020 the original author or authors.
- * <p>
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * <p>
- * http://www.apache.org/licenses/LICENSE-2.0
- * <p>
+ *
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -15,18 +15,18 @@
  */
 package org.mybatis.spring.batch;
 
-import org.apache.ibatis.session.ExecutorType;
-import org.apache.ibatis.session.SqlSession;
-import org.apache.ibatis.session.SqlSessionFactory;
-import org.mybatis.spring.SqlSessionTemplate;
-import org.springframework.batch.item.database.AbstractPagingItemReader;
+import static org.springframework.util.Assert.notNull;
+import static org.springframework.util.ClassUtils.getShortName;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-import static org.springframework.util.Assert.notNull;
-import static org.springframework.util.ClassUtils.getShortName;
+import org.apache.ibatis.session.ExecutorType;
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
+import org.mybatis.spring.SqlSessionTemplate;
+import org.springframework.batch.item.database.AbstractPagingItemReader;
 
 /**
  * {@code org.springframework.batch.item.ItemReader} for reading database records using MyBatis in a paging fashion.

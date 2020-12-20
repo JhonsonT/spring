@@ -1,12 +1,12 @@
 /**
  * Copyright 2010-2020 the original author or authors.
- * <p>
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * <p>
- * http://www.apache.org/licenses/LICENSE-2.0
- * <p>
+ *
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -14,6 +14,12 @@
  * limitations under the License.
  */
 package org.mybatis.spring.sample.config;
+
+import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.sql.DataSource;
 
 import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -40,11 +46,6 @@ import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
 import org.springframework.transaction.PlatformTransactionManager;
 
-import javax.sql.DataSource;
-import java.time.LocalDateTime;
-import java.util.HashMap;
-import java.util.Map;
-
 @Configuration
 @EnableBatchProcessing
 public class SampleJobConfig {
@@ -56,7 +57,7 @@ public class SampleJobConfig {
   private StepBuilderFactory stepBuilderFactory;
 
   public static <T> Converter<T, Map<String, Object>> createItemToParameterMapConverter(String operationBy,
-                                                                                        LocalDateTime operationAt) {
+      LocalDateTime operationAt) {
     return item -> {
       Map<String, Object> parameter = new HashMap<>();
       parameter.put("item", item);
@@ -69,10 +70,10 @@ public class SampleJobConfig {
   @Bean
   public DataSource dataSource() {
     return new EmbeddedDatabaseBuilder().setType(EmbeddedDatabaseType.HSQL)
-      .addScript("org/mybatis/spring/sample/db/database-schema.sql")
-      .addScript("org/springframework/batch/core/schema-drop-hsqldb.sql")
-      .addScript("org/springframework/batch/core/schema-hsqldb.sql")
-      .addScript("org/mybatis/spring/sample/db/database-test-data.sql").build();
+        .addScript("org/mybatis/spring/sample/db/database-schema.sql")
+        .addScript("org/springframework/batch/core/schema-drop-hsqldb.sql")
+        .addScript("org/springframework/batch/core/schema-hsqldb.sql")
+        .addScript("org/mybatis/spring/sample/db/database-test-data.sql").build();
   }
 
   @Bean
